@@ -2,7 +2,7 @@
 {
     public class File
     {
-        public File(string path) => this.Path = path;
+        public File(string Path) => this.Path = Path;
 
         public string Path { get; }
     }
@@ -14,7 +14,7 @@
 
     public class Folder
     {
-        public Folder(string path) => this.Path = path;
+        public Folder(string Path) => this.Path = Path;
 
         public string Path { get; }
 

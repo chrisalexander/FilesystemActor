@@ -2,16 +2,16 @@
 {
     public class FolderExists
     {
-        public FolderExists(Folder folder) => this.Folder = folder;
+        public FolderExists(Folder Folder) => this.Folder = Folder;
 
         public Folder Folder { get; }
     }
 
     public class CreateFolder
     {
-        public CreateFolder(WriteableFolder folder, string folderName)
+        public CreateFolder(WriteableFolder Folder, string FolderName)
         {
-            this.Folder = folder;
+            this.Folder = Folder;
             this.FolderName = FolderName;
         }
 
