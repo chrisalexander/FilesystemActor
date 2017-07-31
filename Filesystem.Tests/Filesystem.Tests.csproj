@@ -63,7 +63,8 @@
     <Reference Include="System.Core" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="FolderExistsTests.cs" />
+    <Compile Include="CreateFolder.Tests.cs" />
+    <Compile Include="FolderExists.Tests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
