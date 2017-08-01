@@ -2,55 +2,76 @@
 {
     public class FolderExists
     {
-        public FolderExists(ReadOnlyFolder Folder) => this.Folder = Folder;
+        public FolderExists(ReadableFolder Folder) => this.Folder = Folder;
 
-        public ReadOnlyFolder Folder { get; }
+        public ReadableFolder Folder { get; }
     }
 
     public class FileExists
     {
-        public FileExists(ReadOnlyFile File) => this.File = File;
+        public FileExists(ReadableFile File) => this.File = File;
 
-        public ReadOnlyFile File { get; }
+        public ReadableFile File { get; }
     }
 
     public class CreateFolder
     {
-        public CreateFolder(WriteableFolder Folder, string FolderName)
+        public CreateFolder(WritableFolder Folder, string FolderName)
         {
             this.Folder = Folder;
             this.FolderName = FolderName;
         }
 
-        public WriteableFolder Folder { get; }
+        public WritableFolder Folder { get; }
 
         public string FolderName { get; }
     }
-
+    
     public class CreateFile
     {
-        public CreateFile(WriteableFile File) => this.File = File;
-
-        public WriteableFile File { get; }
-    }
-
-    public class CreateFileInFolder
-    {
-        public CreateFileInFolder(WriteableFolder Folder, string FileName)
+        public CreateFile(WritableFolder Folder, string FileName)
         {
             this.Folder = Folder;
             this.FileName = FileName;
         }
 
-        public WriteableFolder Folder { get; }
+        public WritableFolder Folder { get; }
 
         public string FileName { get; }
     }
 
+    public class WriteFile
+    {
+        public WriteFile(WritableFile File) => this.File = File;
+
+        public WritableFile File { get; }
+    }
+
+    public class OverwriteFile
+    {
+        public OverwriteFile(OverwritableFile File) => this.File = File;
+
+        public OverwritableFile File { get; }
+    }
+
     public class DeleteFolder
     {
-        public DeleteFolder(WriteableFolder Folder) => this.Folder = Folder;
+        public DeleteFolder(DeletableFolder Folder) => this.Folder = Folder;
 
-        public WriteableFolder Folder { get; }
+        public DeletableFolder Folder { get; }
+    }
+
+    public class EmptyFolder
+    {
+        public EmptyFolder(DeletableFolder Folder) => this.Folder = Folder;
+
+        public DeletableFolder Folder { get; }
+    }
+
+    public class DeleteFile
+    {
+        public DeleteFile(DeletableFile File) => this.File = File;
+
+        public DeletableFile File { get; }
     }
 }

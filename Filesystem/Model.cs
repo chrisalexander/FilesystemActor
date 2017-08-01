@@ -1,34 +1,49 @@
 ﻿namespace Filesystem
 {
-    public class File
+    public class ReadableFile
     {
-        public File(string Path) => this.Path = Path;
+        public ReadableFile(string Path) => this.Path = Path;
 
         public string Path { get; }
     }
 
-    public class WriteableFile : File
+    public class WritableFile : ReadableFile
     {
-        public WriteableFile(string path) : base(path) { }
+        public WritableFile(string path) : base(path) { }
     }
 
-    public class Folder
+    public class OverwritableFile : WritableFile
     {
-        public Folder(string Path) => this.Path = Path;
+        public OverwritableFile(string path) : base(path) { }
+    }
+
+    public class DeletableFile : WritableFile
+    {
+        public DeletableFile(string path) : base(path) { }
+    }
+
+    public class ReadableFolder
+    {
+        public ReadableFolder(string Path) => this.Path = Path;
 
         public string Path { get; }
 
-        public File File(string name) => new File(System.IO.Path.Combine(this.Path, name));
+        public ReadableFile File(string name) => new ReadableFile(System.IO.Path.Combine(this.Path, name));
 
-        public Folder ChildFolder(string name) => new Folder(System.IO.Path.Combine(this.Path, name));
+        public ReadableFolder ChildFolder(string name) => new ReadableFolder(System.IO.Path.Combine(this.Path, name));
     }
 
-    public class WriteableFolder : Folder
+    public class WritableFolder : ReadableFolder
     {
-        public WriteableFolder(string path) : base(path) { }
+        public WritableFolder(string path) : base(path) { }
 
-        public WriteableFile WriteableFile(string name) => new WriteableFile(System.IO.Path.Combine(this.Path, name));
+        public WritableFile WriteableFile(string name) => new WritableFile(System.IO.Path.Combine(this.Path, name));
 
-        public WriteableFolder ChildWriteableFolder(string name) => new WriteableFolder(System.IO.Path.Combine(this.Path, name));
+        public WritableFolder ChildWriteableFolder(string name) => new WritableFolder(System.IO.Path.Combine(this.Path, name));
+    }
+
+    public class DeletableFolder : WritableFolder
+    {
+        public DeletableFolder(string Path) : base(Path) { }
     }
 }

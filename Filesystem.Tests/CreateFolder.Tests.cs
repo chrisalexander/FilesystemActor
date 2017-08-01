@@ -8,7 +8,7 @@ namespace Filesystem.Tests
     [TestClass]
     public class CreateFolderTests : TestKit
     {
-        private WriteableFolder folder;
+        private WritableFolder folder;
         private string folderName;
         private string expectedFullPath;
 
@@ -22,7 +22,7 @@ namespace Filesystem.Tests
         [TestInitialize]
         public void Initialise()
         {
-            this.folder = new WriteableFolder(Path.GetTempPath());
+            this.folder = new WritableFolder(Path.GetTempPath());
             this.folderName = "TestFolder";
             this.expectedFullPath = Path.Combine(this.folder.Path, this.folderName);
         }
@@ -32,7 +32,7 @@ namespace Filesystem.Tests
         {
             var fs = Sys.ActorOf(Props.Create(() => new Filesystem()));
             fs.Tell(new CreateFolder(this.folder, this.folderName));
-            var result = ExpectMsg<WriteableFolder>();
+            var result = ExpectMsg<WritableFolder>();
             Assert.AreEqual(result.Path, this.expectedFullPath);
             Assert.IsTrue(Directory.Exists(this.expectedFullPath));
         }

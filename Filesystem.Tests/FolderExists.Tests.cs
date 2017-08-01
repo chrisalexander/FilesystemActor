@@ -30,7 +30,7 @@ namespace Filesystem.Tests
         public void Folder_exists()
         {
             var fs = Sys.ActorOf(Props.Create(() => new Filesystem()));
-            fs.Tell(new FolderExists(new Folder(this.existingDirectory)));
+            fs.Tell(new FolderExists(new ReadableFolder(this.existingDirectory)));
             var result = ExpectMsg<bool>();
             Assert.IsTrue(result);
         }
@@ -39,7 +39,7 @@ namespace Filesystem.Tests
         public void Folder_missing()
         {
             var fs = Sys.ActorOf(Props.Create(() => new Filesystem()));
-            fs.Tell(new FolderExists(new Folder(this.missingDirectory)));
+            fs.Tell(new FolderExists(new ReadableFolder(this.missingDirectory)));
             var result = ExpectMsg<bool>();
             Assert.IsFalse(result);
         }
