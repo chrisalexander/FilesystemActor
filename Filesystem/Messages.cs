@@ -26,19 +26,6 @@
 
         public string FolderName { get; }
     }
-    
-    public class CreateFile
-    {
-        public CreateFile(WritableFolder Folder, string FileName)
-        {
-            this.Folder = Folder;
-            this.FileName = FileName;
-        }
-
-        public WritableFolder Folder { get; }
-
-        public string FileName { get; }
-    }
 
     public class WriteFile
     {
