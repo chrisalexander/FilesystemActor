@@ -1,4 +1,5 @@
-﻿using System.IO;
+﻿using System;
+using System.IO;
 using Akka.Actor;
 
 namespace Filesystem
@@ -22,6 +23,24 @@ namespace Filesystem
                 var folder = msg.Folder.ChildWriteableFolder(msg.FolderName);
                 Directory.CreateDirectory(folder.Path);
                 Sender.Tell(folder);
+            });
+
+            Receive<WriteFile>(msg =>
+            {
+                try
+                {
+                    using (var file = File.Open(msg.File.Path, FileMode.CreateNew))
+                    {
+                        msg.Stream.Seek(0, SeekOrigin.Begin);
+                        msg.Stream.CopyTo(file);
+                    }
+
+                    Sender.Tell(true);
+                }
+                catch (Exception e)
+                {
+                    Sender.Tell(new Failure() { Exception = e });
+                }
             });
         }
     }
