@@ -7,40 +7,40 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 namespace Filesystem.Tests
 {
     [TestClass]
-    public class FolderExistsTests : TestKit
+    public class FileExistsTests : TestKit
     {
-        private string existingDirectory;
-        private string missingDirectory;
+        private string existingFile;
+        private string missingFile;
 
         [TestCleanup]
         public void Cleanup()
         {
             Shutdown();
-            Directory.Delete(this.existingDirectory);
+            File.Delete(this.existingFile);
         }
 
         [TestInitialize]
         public void Initialise()
         {
-            this.existingDirectory = Path.Combine(Path.GetTempPath(), "exists_" + Guid.NewGuid().ToString());
-            Directory.CreateDirectory(this.existingDirectory);
-            this.missingDirectory = Path.Combine(Path.GetTempPath(), "missing_" + Guid.NewGuid().ToString());
+            this.existingFile = Path.Combine(Path.GetTempPath(), "exists_" + Guid.NewGuid().ToString());
+            File.WriteAllText(this.existingFile, "Test");
+            this.missingFile = Path.Combine(Path.GetTempPath(), "missing_" + Guid.NewGuid().ToString());
         }
 
         [TestMethod]
-        public void Folder_exists()
+        public void File_exists()
         {
             var fs = Sys.ActorOf(Props.Create(() => new Filesystem()));
-            fs.Tell(new FolderExists(new ReadableFolder(this.existingDirectory)));
+            fs.Tell(new FileExists(new ReadableFile(this.existingFile)));
             var result = ExpectMsg<bool>();
             Assert.IsTrue(result);
         }
 
         [TestMethod]
-        public void Folder_missing()
+        public void File_missing()
         {
             var fs = Sys.ActorOf(Props.Create(() => new Filesystem()));
-            fs.Tell(new FolderExists(new ReadableFolder(this.missingDirectory)));
+            fs.Tell(new FileExists(new ReadableFile(this.missingFile)));
             var result = ExpectMsg<bool>();
             Assert.IsFalse(result);
         }

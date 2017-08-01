@@ -7,14 +7,19 @@ namespace Filesystem
     {
         public Filesystem()
         {
-            Receive<FolderExists>(m =>
+            Receive<FolderExists>(msg =>
             {
-                Sender.Tell(Directory.Exists(m.Folder.Path));
+                Sender.Tell(Directory.Exists(msg.Folder.Path));
             });
 
-            Receive<CreateFolder>(m =>
+            Receive<FileExists>(msg =>
             {
-                var folder = m.Folder.ChildWriteableFolder(m.FolderName);
+                Sender.Tell(File.Exists(msg.File.Path));
+            });
+
+            Receive<CreateFolder>(msg =>
+            {
+                var folder = msg.Folder.ChildWriteableFolder(msg.FolderName);
                 Directory.CreateDirectory(folder.Path);
                 Sender.Tell(folder);
             });
