@@ -1,4 +1,7 @@
-﻿namespace Filesystem
+﻿using System.IO;
+using System.Text;
+
+namespace Filesystem
 {
     public class FolderExists
     {
@@ -29,16 +32,40 @@
 
     public class WriteFile
     {
-        public WriteFile(WritableFile File) => this.File = File;
+        public WriteFile(WritableFile File, string Text)
+        {
+            this.File = File;
+            this.Stream = new MemoryStream(Encoding.UTF8.GetBytes(Text));
+        }
+
+        public WriteFile(WritableFile File, Stream Stream)
+        {
+            this.File = File;
+            this.Stream = Stream;
+        }
 
         public WritableFile File { get; }
+
+        public Stream Stream { get; }
     }
 
     public class OverwriteFile
     {
-        public OverwriteFile(OverwritableFile File) => this.File = File;
+        public OverwriteFile(OverwritableFile File, string Text)
+        {
+            this.File = File;
+            this.Stream = new MemoryStream(Encoding.UTF8.GetBytes(Text));
+        }
+
+        public OverwriteFile(OverwritableFile File, Stream Stream)
+        {
+            this.File = File;
+            this.Stream = Stream;
+        }
 
         public OverwritableFile File { get; }
+
+        public Stream Stream { get; }
     }
 
     public class DeleteFolder
