@@ -7,21 +7,6 @@
         public string Path { get; }
     }
 
-    public class WritableFile : ReadableFile
-    {
-        public WritableFile(string path) : base(path) { }
-    }
-
-    public class OverwritableFile : WritableFile
-    {
-        public OverwritableFile(string path) : base(path) { }
-    }
-
-    public class DeletableFile : WritableFile
-    {
-        public DeletableFile(string path) : base(path) { }
-    }
-
     public class ReadableFolder
     {
         public ReadableFolder(string Path) => this.Path = Path;
@@ -33,6 +18,16 @@
         public ReadableFolder ChildFolder(string name) => new ReadableFolder(System.IO.Path.Combine(Path, name));
     }
 
+    public class WritableFile : ReadableFile
+    {
+        public WritableFile(string path) : base(path) { }
+    }
+
+    public class OverwritableFile : WritableFile
+    {
+        public OverwritableFile(string path) : base(path) { }
+    }
+
     public class WritableFolder : ReadableFolder
     {
         public WritableFolder(string path) : base(path) { }
@@ -40,6 +35,11 @@
         public WritableFile WriteableFile(string name) => new WritableFile(System.IO.Path.Combine(Path, name));
 
         public WritableFolder ChildWriteableFolder(string name) => new WritableFolder(System.IO.Path.Combine(Path, name));
+    }
+
+    public class DeletableFile : WritableFile
+    {
+        public DeletableFile(string path) : base(path) { }
     }
 
     public class DeletableFolder : WritableFolder
