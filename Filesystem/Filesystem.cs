@@ -42,6 +42,24 @@ namespace Filesystem
                     Sender.Tell(new Failure() { Exception = e });
                 }
             });
+
+            Receive<OverwriteFile>(msg =>
+            {
+                try
+                {
+                    using (var file = File.Open(msg.File.Path, FileMode.Create))
+                    {
+                        msg.Stream.Seek(0, SeekOrigin.Begin);
+                        msg.Stream.CopyTo(file);
+                    }
+
+                    Sender.Tell(true);
+                }
+                catch (Exception e)
+                {
+                    Sender.Tell(new Failure() { Exception = e });
+                }
+            });
         }
     }
 }

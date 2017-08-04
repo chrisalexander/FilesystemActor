@@ -66,6 +66,7 @@
     <Compile Include="CreateFolder.Tests.cs" />
     <Compile Include="FileExists.Tests.cs" />
     <Compile Include="FolderExists.Tests.cs" />
+    <Compile Include="OverwriteFile.Tests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="WriteFile.Tests.cs" />
   </ItemGroup>
