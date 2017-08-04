@@ -60,6 +60,19 @@ namespace Filesystem
                     Sender.Tell(new Failure() { Exception = e });
                 }
             });
+
+            Receive<DeleteFolder>(msg =>
+            {
+                try
+                {
+                    Directory.Delete(msg.Folder.Path, msg.Recursive);
+                    Sender.Tell(true);
+                }
+                catch (Exception e)
+                {
+                    Sender.Tell(new Failure() { Exception = e });
+                }
+            });
         }
     }
 }

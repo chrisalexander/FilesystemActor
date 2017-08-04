@@ -73,6 +73,8 @@ namespace Filesystem
         public DeleteFolder(DeletableFolder Folder) => this.Folder = Folder;
 
         public DeletableFolder Folder { get; }
+
+        public bool Recursive { get; set; }
     }
 
     public class EmptyFolder
