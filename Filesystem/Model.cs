@@ -28,18 +28,18 @@
 
         public string Path { get; }
 
-        public ReadableFile File(string name) => new ReadableFile(System.IO.Path.Combine(this.Path, name));
+        public ReadableFile File(string name) => new ReadableFile(System.IO.Path.Combine(Path, name));
 
-        public ReadableFolder ChildFolder(string name) => new ReadableFolder(System.IO.Path.Combine(this.Path, name));
+        public ReadableFolder ChildFolder(string name) => new ReadableFolder(System.IO.Path.Combine(Path, name));
     }
 
     public class WritableFolder : ReadableFolder
     {
         public WritableFolder(string path) : base(path) { }
 
-        public WritableFile WriteableFile(string name) => new WritableFile(System.IO.Path.Combine(this.Path, name));
+        public WritableFile WriteableFile(string name) => new WritableFile(System.IO.Path.Combine(Path, name));
 
-        public WritableFolder ChildWriteableFolder(string name) => new WritableFolder(System.IO.Path.Combine(this.Path, name));
+        public WritableFolder ChildWriteableFolder(string name) => new WritableFolder(System.IO.Path.Combine(Path, name));
     }
 
     public class DeletableFolder : WritableFolder
