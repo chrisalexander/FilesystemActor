@@ -36,5 +36,19 @@ namespace Filesystem.Tests
             Assert.AreEqual(result.Path, this.expectedFullPath);
             Assert.IsTrue(Directory.Exists(this.expectedFullPath));
         }
+
+        [TestMethod]
+        public void Create_folder_already_exists()
+        {
+            var fs = Sys.ActorOf(Props.Create(() => new Filesystem()));
+            fs.Tell(new CreateFolder(this.folder, this.folderName));
+            var result = ExpectMsg<WritableFolder>();
+            Assert.AreEqual(result.Path, this.expectedFullPath);
+            Assert.IsTrue(Directory.Exists(this.expectedFullPath));
+
+            fs.Tell(new CreateFolder(this.folder, this.folderName));
+            result = ExpectMsg<WritableFolder>();
+            Assert.AreEqual(result.Path, this.expectedFullPath);
+        }
     }
 }
