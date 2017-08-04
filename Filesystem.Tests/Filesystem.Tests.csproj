@@ -64,6 +64,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CreateFolder.Tests.cs" />
+    <Compile Include="EmptyFolder.Tests.cs" />
     <Compile Include="FileExists.Tests.cs" />
     <Compile Include="FolderExists.Tests.cs" />
     <Compile Include="OverwriteFile.Tests.cs" />
