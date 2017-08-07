@@ -78,9 +78,9 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Filesystem\Filesystem.csproj">
-      <Project>{ea328671-dc41-40f9-bbc8-87a443f17320}</Project>
-      <Name>Filesystem</Name>
+    <ProjectReference Include="..\Filesystem\Filesystem.Akka.csproj">
+      <Project>{4A038057-3096-44F5-8BC9-837749CA734F}</Project>
+      <Name>Filesystem.Akka</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets" Condition="Exists('$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets')" />
