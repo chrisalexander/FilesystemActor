@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Filesystem.Akka", "Filesyst
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Filesystem.Akka.Tests", "Filesystem.Akka.Tests\Filesystem.Akka.Tests.csproj", "{EA88540D-E06E-4342-8779-3C98A90BD7DC}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Filesystem.Akka.TestKit", "Filesystem.Akka.TestKit\Filesystem.Akka.TestKit.csproj", "{8BBA55E0-6462-4571-81CF-0C38DAB08193}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{EA88540D-E06E-4342-8779-3C98A90BD7DC}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{EA88540D-E06E-4342-8779-3C98A90BD7DC}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{EA88540D-E06E-4342-8779-3C98A90BD7DC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8BBA55E0-6462-4571-81CF-0C38DAB08193}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8BBA55E0-6462-4571-81CF-0C38DAB08193}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8BBA55E0-6462-4571-81CF-0C38DAB08193}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8BBA55E0-6462-4571-81CF-0C38DAB08193}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
