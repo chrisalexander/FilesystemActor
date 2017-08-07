@@ -14,6 +14,46 @@ namespace Filesystem.Akka.TestKit
         private void Filesystem()
         {
             Receive<EnterSetup>(msg => Become(Configuring));
+
+            Receive<FolderExists>(msg =>
+            {
+
+            });
+
+            Receive<FileExists>(msg =>
+            {
+
+            });
+
+            Receive<CreateFolder>(msg =>
+            {
+
+            });
+
+            Receive<WriteFile>(msg =>
+            {
+
+            });
+
+            Receive<OverwriteFile>(msg =>
+            {
+
+            });
+
+            Receive<DeleteFolder>(msg =>
+            {
+
+            });
+
+            Receive<EmptyFolder>(msg =>
+            {
+
+            });
+
+            Receive<DeleteFile>(msg =>
+            {
+
+            });
         }
     }
 }

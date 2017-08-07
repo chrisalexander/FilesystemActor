@@ -56,5 +56,11 @@
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Filesystem.Akka\Filesystem.Akka.csproj">
+      <Project>{4a038057-3096-44f5-8bc9-837749ca734f}</Project>
+      <Name>Filesystem.Akka</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
