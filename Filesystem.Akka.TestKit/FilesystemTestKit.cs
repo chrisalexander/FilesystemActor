@@ -9,6 +9,21 @@ namespace Filesystem.Akka.TestKit
         private void Configuring()
         {
             Receive<SetupComplete>(msg => Become(Filesystem));
+
+            Receive<CreateTestFolder>(msg =>
+            {
+
+            });
+
+            Receive<CreateTestFile>(msg =>
+            {
+
+            });
+
+            Receive<LockTestFile>(msg =>
+            {
+
+            });
         }
 
         private void Filesystem()
