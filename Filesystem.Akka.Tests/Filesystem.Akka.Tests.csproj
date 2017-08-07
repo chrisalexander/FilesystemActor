@@ -78,7 +78,7 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Filesystem\Filesystem.Akka.csproj">
+    <ProjectReference Include="..\Filesystem.Akka\Filesystem.Akka.csproj">
       <Project>{4A038057-3096-44F5-8BC9-837749CA734F}</Project>
       <Name>Filesystem.Akka</Name>
     </ProjectReference>

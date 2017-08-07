@@ -3,9 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.26430.16
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Filesystem.Akka", "Filesystem\Filesystem.Akka.csproj", "{4A038057-3096-44F5-8BC9-837749CA734F}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Filesystem.Akka", "Filesystem.Akka\Filesystem.Akka.csproj", "{4A038057-3096-44F5-8BC9-837749CA734F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Filesystem.Akka.Tests", "Filesystem.Tests\Filesystem.Akka.Tests.csproj", "{EA88540D-E06E-4342-8779-3C98A90BD7DC}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Filesystem.Akka.Tests", "Filesystem.Akka.Tests\Filesystem.Akka.Tests.csproj", "{EA88540D-E06E-4342-8779-3C98A90BD7DC}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
