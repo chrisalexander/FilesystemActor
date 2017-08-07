@@ -25,23 +25,9 @@ namespace Filesystem.Akka.Tests
             File.Delete(this.openFilePath);
 
             Shutdown();
-            try
-            {
-                Directory.Delete(this.emptyFolder, true);
-            }
-            catch { }
-
-            try
-            {
-                Directory.Delete(this.populatedFolder, true);
-            }
-            catch { }
-
-            try
-            {
-                Directory.Delete(this.lockedFolder, true);
-            }
-            catch { }
+            Directory.Delete(this.emptyFolder, true);
+            Directory.Delete(this.populatedFolder, true);
+            Directory.Delete(this.lockedFolder, true);
         }
 
         [TestInitialize]
