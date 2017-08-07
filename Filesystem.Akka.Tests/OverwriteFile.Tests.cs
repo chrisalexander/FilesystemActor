@@ -5,7 +5,7 @@ using Akka.Actor;
 using Akka.TestKit.VsTest;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-namespace Filesystem.Tests
+namespace Filesystem.Akka.Tests
 {
     [TestClass]
     public class OverwriteFileTests : TestKit

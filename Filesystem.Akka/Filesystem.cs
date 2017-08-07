@@ -2,7 +2,7 @@
 using System.IO;
 using Akka.Actor;
 
-namespace Filesystem
+namespace Filesystem.Akka
 {
     public class Filesystem : ReceiveActor
     {

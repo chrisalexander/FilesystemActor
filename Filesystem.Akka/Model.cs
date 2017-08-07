@@ -1,4 +1,4 @@
-﻿namespace Filesystem
+﻿namespace Filesystem.Akka
 {
     public class ReadableFolder
     {
