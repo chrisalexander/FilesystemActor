@@ -92,6 +92,20 @@ namespace Filesystem
                     Sender.Tell(new Failure() { Exception = e });
                 }
             });
+
+            Receive<DeleteFile>(msg =>
+            {
+                try
+                {
+                    File.Delete(msg.File.Path);
+
+                    Sender.Tell(true);
+                }
+                catch (Exception e)
+                {
+                    Sender.Tell(new Failure() { Exception = e });
+                }
+            });
         }
     }
 }
