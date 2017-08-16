@@ -1,4 +1,5 @@
-﻿using System.IO;
+﻿using System.Collections.Generic;
+using System.IO;
 using System.Text;
 
 namespace Filesystem.Akka
@@ -89,5 +90,26 @@ namespace Filesystem.Akka
         public DeleteFile(DeletableFile File) => this.File = File;
 
         public DeletableFile File { get; }
+    }
+
+    public class ListReadableContents
+    {
+        public ListReadableContents(ReadableFolder Folder) => this.Folder = Folder;
+
+        public ReadableFolder Folder { get; }
+    }
+
+    public class ListWritableContents
+    {
+        public ListWritableContents(WritableFolder Folder) => this.Folder = Folder;
+
+        public WritableFolder Folder { get; }
+    }
+
+    public class ListDeletableContents
+    {
+        public ListDeletableContents(DeletableFolder Folder) => this.Folder = Folder;
+
+        public DeletableFolder Folder { get; }
     }
 }
