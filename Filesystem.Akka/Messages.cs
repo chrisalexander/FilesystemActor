@@ -112,4 +112,43 @@ namespace Filesystem.Akka
 
         public DeletableFolder Folder { get; }
     }
+    
+    public class FolderReadableContents
+    {
+        public FolderReadableContents(List<ReadableFolder> Folders, List<ReadableFile> Files)
+        {
+            this.Folders = Folders;
+            this.Files = Files;
+        }
+
+        public List<ReadableFolder> Folders { get; }
+
+        public List<ReadableFile> Files { get; }
+    }
+    
+    public class FolderWritableContents
+    {
+        public FolderWritableContents(List<WritableFolder> Folders, List<WritableFile> Files)
+        {
+            this.Folders = Folders;
+            this.Files = Files;
+        }
+
+        public List<WritableFolder> Folders { get; }
+
+        public List<WritableFile> Files { get; }
+    }
+    
+    public class FolderDeletableContents
+    {
+        public FolderDeletableContents(List<DeletableFolder> Folders, List<DeletableFile> Files)
+        {
+            this.Folders = Folders;
+            this.Files = Files;
+        }
+
+        public List<DeletableFolder> Folders { get; }
+
+        public List<DeletableFile> Files { get; }
+    }
 }
