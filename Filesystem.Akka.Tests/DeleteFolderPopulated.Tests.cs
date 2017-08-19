@@ -7,9 +7,8 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 namespace Filesystem.Akka.Tests
 {
     [TestClass]
-    public class DeleteFolderTests : TestKit
+    public class DeleteFolderPopulatedTests : TestKit
     {
-        private string emptyFolder;
         private string populatedFolder;
 
         [TestCleanup]
@@ -18,46 +17,17 @@ namespace Filesystem.Akka.Tests
             Shutdown();
             try
             {
-                Directory.Delete(this.emptyFolder, true);
+                Directory.Delete(this.populatedFolder, true);
             }
             catch { }
-
-            try
-            {
-                Directory.Delete(this.populatedFolder, true);
-            } catch { }
         }
 
         [TestInitialize]
         public void Initialise()
         {
-            this.emptyFolder = Path.Combine(Path.GetTempPath(), "empty_" + Guid.NewGuid().ToString());
             this.populatedFolder = Path.Combine(Path.GetTempPath(), "populated_" + Guid.NewGuid().ToString());
-
-            Directory.CreateDirectory(emptyFolder);
-            Directory.CreateDirectory(populatedFolder);
-
+            Directory.CreateDirectory(this.populatedFolder);
             File.WriteAllText(Path.Combine(this.populatedFolder, "file"), "file");
-        }
-
-        [TestMethod]
-        public void Can_delete_empty_folder_non_recursive()
-        {
-            var fs = Sys.ActorOf(Props.Create(() => new Filesystem()));
-            fs.Tell(new DeleteFolder(new DeletableFolder(this.emptyFolder)));
-            var result = ExpectMsg<bool>();
-            Assert.IsTrue(result);
-            Assert.IsFalse(Directory.Exists(this.emptyFolder));
-        }
-
-        [TestMethod]
-        public void Can_delete_empty_folder_recursive()
-        {
-            var fs = Sys.ActorOf(Props.Create(() => new Filesystem()));
-            fs.Tell(new DeleteFolder(new DeletableFolder(this.emptyFolder)) { Recursive = true });
-            var result = ExpectMsg<bool>();
-            Assert.IsTrue(result);
-            Assert.IsFalse(Directory.Exists(this.emptyFolder));
         }
 
         [TestMethod]

@@ -67,6 +67,7 @@
     <Compile Include="CreateFolder.Tests.cs" />
     <Compile Include="DeleteFileExists.Tests.cs" />
     <Compile Include="DeleteFileMissing.Tests.cs" />
+    <Compile Include="DeleteFolderPopulated.Tests.cs" />
     <Compile Include="EmptyFolder.Tests.cs" />
     <Compile Include="FileExists.Tests.cs" />
     <Compile Include="FolderExists.Tests.cs" />
@@ -78,7 +79,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
-    <Compile Include="DeleteFolder.Tests.cs" />
+    <Compile Include="DeleteFolderEmpty.Tests.cs" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
