@@ -65,7 +65,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CreateFolder.Tests.cs" />
-    <Compile Include="DeleteFile.Tests.cs" />
+    <Compile Include="DeleteFileExists.Tests.cs" />
+    <Compile Include="DeleteFileMissing.Tests.cs" />
     <Compile Include="EmptyFolder.Tests.cs" />
     <Compile Include="FileExists.Tests.cs" />
     <Compile Include="FolderExists.Tests.cs" />
