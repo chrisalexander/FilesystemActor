@@ -8,23 +8,15 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 namespace Filesystem.Akka.Tests
 {
     [TestClass]
-    public class OverwriteFileTests : TestKit
+    public class OverwriteExistingFileTests : TestKit
     {
         private string existingFile;
-        private string createFile;
-        private string createFileStream;
-        private FileStream openFile;
-        private string openFilePath;
 
         [TestCleanup]
         public void Cleanup()
         {
             Shutdown();
             File.Delete(this.existingFile);
-            File.Delete(this.createFile);
-            File.Delete(this.createFileStream);
-            this.openFile.Close();
-            File.Delete(this.openFilePath);
         }
 
         [TestInitialize]
@@ -32,11 +24,6 @@ namespace Filesystem.Akka.Tests
         {
             this.existingFile = Path.Combine(Path.GetTempPath(), "exists_" + Guid.NewGuid().ToString());
             File.WriteAllText(this.existingFile, "Test");
-            this.createFile = Path.Combine(Path.GetTempPath(), "create_" + Guid.NewGuid().ToString());
-            this.createFileStream = Path.Combine(Path.GetTempPath(), "createstream_" + Guid.NewGuid().ToString());
-
-            this.openFilePath = Path.Combine(Path.GetTempPath(), "open_" + Guid.NewGuid().ToString());
-            this.openFile = File.OpenWrite(this.openFilePath);
         }
 
         [TestMethod]
@@ -49,7 +36,26 @@ namespace Filesystem.Akka.Tests
             Assert.IsTrue(File.Exists(this.existingFile));
             Assert.AreEqual("Test", File.ReadAllText(this.existingFile));
         }
+    }
 
+    [TestClass]
+    public class OverwriteMissingFileTests : TestKit
+    {
+        private string createFile;
+
+        [TestCleanup]
+        public void Cleanup()
+        {
+            Shutdown();
+            File.Delete(this.createFile);
+        }
+
+        [TestInitialize]
+        public void Initialise()
+        {
+            this.createFile = Path.Combine(Path.GetTempPath(), "create_" + Guid.NewGuid().ToString());
+        }
+        
         [TestMethod]
         public void Can_write_absent_file()
         {
@@ -60,7 +66,26 @@ namespace Filesystem.Akka.Tests
             Assert.IsTrue(File.Exists(this.createFile));
             Assert.AreEqual("Test", File.ReadAllText(this.createFile));
         }
+    }
 
+    [TestClass]
+    public class OverwriteMissingFileStreamTests : TestKit
+    {
+        private string createFileStream;
+
+        [TestCleanup]
+        public void Cleanup()
+        {
+            Shutdown();
+            File.Delete(this.createFileStream);
+        }
+
+        [TestInitialize]
+        public void Initialise()
+        {
+            this.createFileStream = Path.Combine(Path.GetTempPath(), "createstream_" + Guid.NewGuid().ToString());
+        }
+        
         [TestMethod]
         public void Can_write_with_stream()
         {
@@ -71,7 +96,29 @@ namespace Filesystem.Akka.Tests
             Assert.IsTrue(File.Exists(this.createFileStream));
             Assert.AreEqual("Test Weird ? Character", File.ReadAllText(this.createFileStream));
         }
+    }
 
+    [TestClass]
+    public class OverwriteOpenFileTests : TestKit
+    {
+        private FileStream openFile;
+        private string openFilePath;
+
+        [TestCleanup]
+        public void Cleanup()
+        {
+            Shutdown();
+            this.openFile.Close();
+            File.Delete(this.openFilePath);
+        }
+
+        [TestInitialize]
+        public void Initialise()
+        {
+            this.openFilePath = Path.Combine(Path.GetTempPath(), "open_" + Guid.NewGuid().ToString());
+            this.openFile = File.OpenWrite(this.openFilePath);
+        }
+        
         [TestMethod]
         public void Cant_overwrite_open_file()
         {
