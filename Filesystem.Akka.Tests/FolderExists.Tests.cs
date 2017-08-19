@@ -7,10 +7,9 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 namespace Filesystem.Akka.Tests
 {
     [TestClass]
-    public class FolderExistsTests : TestKit
+    public class FolderExistsExistingTests : TestKit
     {
         private string existingDirectory;
-        private string missingDirectory;
 
         [TestCleanup]
         public void Cleanup()
@@ -24,7 +23,6 @@ namespace Filesystem.Akka.Tests
         {
             this.existingDirectory = Path.Combine(Path.GetTempPath(), "exists_" + Guid.NewGuid().ToString());
             Directory.CreateDirectory(this.existingDirectory);
-            this.missingDirectory = Path.Combine(Path.GetTempPath(), "missing_" + Guid.NewGuid().ToString());
         }
 
         [TestMethod]
@@ -35,7 +33,25 @@ namespace Filesystem.Akka.Tests
             var result = ExpectMsg<bool>();
             Assert.IsTrue(result);
         }
+    }
 
+    [TestClass]
+    public class FolderExistsMissingTests : TestKit
+    {
+        private string missingDirectory;
+
+        [TestCleanup]
+        public void Cleanup()
+        {
+            Shutdown();
+        }
+
+        [TestInitialize]
+        public void Initialise()
+        {
+            this.missingDirectory = Path.Combine(Path.GetTempPath(), "missing_" + Guid.NewGuid().ToString());
+        }
+        
         [TestMethod]
         public void Folder_missing()
         {
