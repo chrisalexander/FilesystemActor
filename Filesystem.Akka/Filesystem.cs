@@ -1,5 +1,6 @@
 ﻿using System;
 using System.IO;
+using System.Linq;
 using Akka.Actor;
 
 namespace Filesystem.Akka
@@ -100,6 +101,69 @@ namespace Filesystem.Akka
                     File.Delete(msg.File.Path);
 
                     Sender.Tell(true);
+                }
+                catch (Exception e)
+                {
+                    Sender.Tell(new Failure() { Exception = e });
+                }
+            });
+
+            Receive<ListReadableContents>(msg =>
+            {
+                try
+                {
+                    var directories = Directory.EnumerateDirectories(msg.Folder.Path)
+                                        .Select(d => Path.Combine(msg.Folder.Path, d))
+                                        .Select(d => new ReadableFolder(d))
+                                        .ToList();
+                    var files = Directory.EnumerateFiles(msg.Folder.Path)
+                                    .Select(f => Path.Combine(msg.Folder.Path, f))
+                                    .Select(f => new ReadableFile(f))
+                                    .ToList();
+
+                    Sender.Tell(new FolderReadableContents(directories, files));
+                }
+                catch (Exception e)
+                {
+                    Sender.Tell(new Failure() { Exception = e });
+                }
+            });
+
+            Receive<ListWritableContents>(msg =>
+            {
+                try
+                {
+                    var directories = Directory.EnumerateDirectories(msg.Folder.Path)
+                                        .Select(d => Path.Combine(msg.Folder.Path, d))
+                                        .Select(d => new WritableFolder(d))
+                                        .ToList();
+                    var files = Directory.EnumerateFiles(msg.Folder.Path)
+                                    .Select(f => Path.Combine(msg.Folder.Path, f))
+                                    .Select(f => new WritableFile(f))
+                                    .ToList();
+
+                    Sender.Tell(new FolderWritableContents(directories, files));
+                }
+                catch (Exception e)
+                {
+                    Sender.Tell(new Failure() { Exception = e });
+                }
+            });
+
+            Receive<ListDeletableContents>(msg =>
+            {
+                try
+                {
+                    var directories = Directory.EnumerateDirectories(msg.Folder.Path)
+                                        .Select(d => Path.Combine(msg.Folder.Path, d))
+                                        .Select(d => new DeletableFolder(d))
+                                        .ToList();
+                    var files = Directory.EnumerateFiles(msg.Folder.Path)
+                                    .Select(f => Path.Combine(msg.Folder.Path, f))
+                                    .Select(f => new DeletableFile(f))
+                                    .ToList();
+
+                    Sender.Tell(new FolderDeletableContents(directories, files));
                 }
                 catch (Exception e)
                 {

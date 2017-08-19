@@ -1,4 +1,5 @@
-﻿using System.IO;
+﻿using System.Collections.Generic;
+using System.IO;
 using System.Text;
 
 namespace Filesystem.Akka
@@ -89,5 +90,65 @@ namespace Filesystem.Akka
         public DeleteFile(DeletableFile File) => this.File = File;
 
         public DeletableFile File { get; }
+    }
+
+    public class ListReadableContents
+    {
+        public ListReadableContents(ReadableFolder Folder) => this.Folder = Folder;
+
+        public ReadableFolder Folder { get; }
+    }
+
+    public class ListWritableContents
+    {
+        public ListWritableContents(WritableFolder Folder) => this.Folder = Folder;
+
+        public WritableFolder Folder { get; }
+    }
+
+    public class ListDeletableContents
+    {
+        public ListDeletableContents(DeletableFolder Folder) => this.Folder = Folder;
+
+        public DeletableFolder Folder { get; }
+    }
+    
+    public class FolderReadableContents
+    {
+        public FolderReadableContents(List<ReadableFolder> Folders, List<ReadableFile> Files)
+        {
+            this.Folders = Folders;
+            this.Files = Files;
+        }
+
+        public List<ReadableFolder> Folders { get; }
+
+        public List<ReadableFile> Files { get; }
+    }
+    
+    public class FolderWritableContents
+    {
+        public FolderWritableContents(List<WritableFolder> Folders, List<WritableFile> Files)
+        {
+            this.Folders = Folders;
+            this.Files = Files;
+        }
+
+        public List<WritableFolder> Folders { get; }
+
+        public List<WritableFile> Files { get; }
+    }
+    
+    public class FolderDeletableContents
+    {
+        public FolderDeletableContents(List<DeletableFolder> Folders, List<DeletableFile> Files)
+        {
+            this.Folders = Folders;
+            this.Files = Files;
+        }
+
+        public List<DeletableFolder> Folders { get; }
+
+        public List<DeletableFile> Files { get; }
     }
 }

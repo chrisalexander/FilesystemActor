@@ -69,6 +69,7 @@
     <Compile Include="EmptyFolder.Tests.cs" />
     <Compile Include="FileExists.Tests.cs" />
     <Compile Include="FolderExists.Tests.cs" />
+    <Compile Include="ListContents.Tests.cs" />
     <Compile Include="Model.Tests.cs" />
     <Compile Include="OverwriteFile.Tests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
