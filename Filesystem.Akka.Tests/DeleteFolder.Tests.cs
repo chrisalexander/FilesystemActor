@@ -7,10 +7,9 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 namespace Filesystem.Akka.Tests
 {
     [TestClass]
-    public class DeleteFolderTests : TestKit
+    public class DeleteFolderEmptyTests : TestKit
     {
         private string emptyFolder;
-        private string populatedFolder;
 
         [TestCleanup]
         public void Cleanup()
@@ -21,23 +20,13 @@ namespace Filesystem.Akka.Tests
                 Directory.Delete(this.emptyFolder, true);
             }
             catch { }
-
-            try
-            {
-                Directory.Delete(this.populatedFolder, true);
-            } catch { }
         }
 
         [TestInitialize]
         public void Initialise()
         {
             this.emptyFolder = Path.Combine(Path.GetTempPath(), "empty_" + Guid.NewGuid().ToString());
-            this.populatedFolder = Path.Combine(Path.GetTempPath(), "populated_" + Guid.NewGuid().ToString());
-
-            Directory.CreateDirectory(emptyFolder);
-            Directory.CreateDirectory(populatedFolder);
-
-            File.WriteAllText(Path.Combine(this.populatedFolder, "file"), "file");
+            Directory.CreateDirectory(this.emptyFolder);
         }
 
         [TestMethod]
@@ -58,6 +47,31 @@ namespace Filesystem.Akka.Tests
             var result = ExpectMsg<bool>();
             Assert.IsTrue(result);
             Assert.IsFalse(Directory.Exists(this.emptyFolder));
+        }
+    }
+
+    [TestClass]
+    public class DeleteFolderPopulatedTests : TestKit
+    {
+        private string populatedFolder;
+
+        [TestCleanup]
+        public void Cleanup()
+        {
+            Shutdown();
+            try
+            {
+                Directory.Delete(this.populatedFolder, true);
+            }
+            catch { }
+        }
+
+        [TestInitialize]
+        public void Initialise()
+        {
+            this.populatedFolder = Path.Combine(Path.GetTempPath(), "populated_" + Guid.NewGuid().ToString());
+            Directory.CreateDirectory(this.populatedFolder);
+            File.WriteAllText(Path.Combine(this.populatedFolder, "file"), "file");
         }
 
         [TestMethod]

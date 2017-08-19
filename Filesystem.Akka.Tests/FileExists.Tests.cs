@@ -7,10 +7,9 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 namespace Filesystem.Akka.Tests
 {
     [TestClass]
-    public class FileExistsTests : TestKit
+    public class FileExistsExistingTests : TestKit
     {
         private string existingFile;
-        private string missingFile;
 
         [TestCleanup]
         public void Cleanup()
@@ -24,7 +23,6 @@ namespace Filesystem.Akka.Tests
         {
             this.existingFile = Path.Combine(Path.GetTempPath(), "exists_" + Guid.NewGuid().ToString());
             File.WriteAllText(this.existingFile, "Test");
-            this.missingFile = Path.Combine(Path.GetTempPath(), "missing_" + Guid.NewGuid().ToString());
         }
 
         [TestMethod]
@@ -35,7 +33,25 @@ namespace Filesystem.Akka.Tests
             var result = ExpectMsg<bool>();
             Assert.IsTrue(result);
         }
+    }
 
+    [TestClass]
+    public class FileExistsMissingTests : TestKit
+    {
+        private string missingFile;
+
+        [TestCleanup]
+        public void Cleanup()
+        {
+            Shutdown();
+        }
+
+        [TestInitialize]
+        public void Initialise()
+        {
+            this.missingFile = Path.Combine(Path.GetTempPath(), "missing_" + Guid.NewGuid().ToString());
+        }
+        
         [TestMethod]
         public void File_missing()
         {

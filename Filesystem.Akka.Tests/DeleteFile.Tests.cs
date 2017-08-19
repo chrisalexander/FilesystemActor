@@ -7,11 +7,9 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 namespace Filesystem.Akka.Tests
 {
     [TestClass]
-    public class DeleteFileTests : TestKit
+    public class DeleteFileExistsTests : TestKit
     {
         private string existingFile;
-        private string missingFile;
-        private string fileInMissingFolder;
 
         [TestCleanup]
         public void Cleanup()
@@ -24,9 +22,6 @@ namespace Filesystem.Akka.Tests
         public void Initialise()
         {
             this.existingFile = Path.Combine(Path.GetTempPath(), "existing_" + Guid.NewGuid().ToString());
-            this.missingFile = Path.Combine(Path.GetTempPath(), "missing_" + Guid.NewGuid().ToString());
-            this.fileInMissingFolder = Path.Combine(Path.GetTempPath(), Guid.NewGuid().ToString(), "missingfolder_" + Guid.NewGuid().ToString());
-
             File.WriteAllText(this.existingFile, "Test");
         }
 
@@ -39,7 +34,27 @@ namespace Filesystem.Akka.Tests
             Assert.IsTrue(result);
             Assert.IsFalse(File.Exists(this.existingFile));
         }
-        
+    }
+
+    [TestClass]
+    public class DeleteFileMissingTests : TestKit
+    {
+        private string missingFile;
+        private string fileInMissingFolder;
+
+        [TestCleanup]
+        public void Cleanup()
+        {
+            Shutdown();
+        }
+
+        [TestInitialize]
+        public void Initialise()
+        {
+            this.missingFile = Path.Combine(Path.GetTempPath(), "missing_" + Guid.NewGuid().ToString());
+            this.fileInMissingFolder = Path.Combine(Path.GetTempPath(), Guid.NewGuid().ToString(), "missingfolder_" + Guid.NewGuid().ToString());
+        }
+
         [TestMethod]
         public void Can_delete_missing_file()
         {

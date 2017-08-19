@@ -7,10 +7,9 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 namespace Filesystem.Akka.Tests
 {
     [TestClass]
-    public class ListContentsTests : TestKit
+    public class ListContentsExistingTests : TestKit
     {
         private string existingDirectory;
-        private string missingDirectory;
 
         [TestCleanup]
         public void Cleanup()
@@ -30,8 +29,6 @@ namespace Filesystem.Akka.Tests
             File.WriteAllText(Path.Combine(this.existingDirectory, "1"), "1");
             File.WriteAllText(Path.Combine(this.existingDirectory, "2"), "2");
             File.WriteAllText(Path.Combine(this.existingDirectory, "3"), "3");
-
-            this.missingDirectory = Path.Combine(Path.GetTempPath(), "missing_" + Guid.NewGuid().ToString());
         }
 
         [TestMethod]
@@ -48,16 +45,7 @@ namespace Filesystem.Akka.Tests
             Assert.IsTrue(result.Files[1].Path.EndsWith("2"));
             Assert.IsTrue(result.Files[2].Path.EndsWith("3"));
         }
-
-        [TestMethod]
-        public void Readable_missing_folder_contents()
-        {
-            var fs = Sys.ActorOf(Props.Create(() => new Filesystem()));
-            fs.Tell(new ListReadableContents(new ReadableFolder(this.missingDirectory)));
-            var result = ExpectMsg<Failure>();
-            Assert.IsTrue(result.Exception is IOException);
-        }
-
+        
         [TestMethod]
         public void Writable_folder_contents()
         {
@@ -72,16 +60,7 @@ namespace Filesystem.Akka.Tests
             Assert.IsTrue(result.Files[1].Path.EndsWith("2"));
             Assert.IsTrue(result.Files[2].Path.EndsWith("3"));
         }
-
-        [TestMethod]
-        public void Writable_missing_folder_contents()
-        {
-            var fs = Sys.ActorOf(Props.Create(() => new Filesystem()));
-            fs.Tell(new ListWritableContents(new WritableFolder(this.missingDirectory)));
-            var result = ExpectMsg<Failure>();
-            Assert.IsTrue(result.Exception is IOException);
-        }
-
+        
         [TestMethod]
         public void Deletable_folder_contents()
         {
@@ -96,7 +75,43 @@ namespace Filesystem.Akka.Tests
             Assert.IsTrue(result.Files[1].Path.EndsWith("2"));
             Assert.IsTrue(result.Files[2].Path.EndsWith("3"));
         }
+    }
 
+    [TestClass]
+    public class ListContentsMissingTests : TestKit
+    {
+        private string missingDirectory;
+
+        [TestCleanup]
+        public void Cleanup()
+        {
+            Shutdown();
+        }
+
+        [TestInitialize]
+        public void Initialise()
+        {
+            this.missingDirectory = Path.Combine(Path.GetTempPath(), "missing_" + Guid.NewGuid().ToString());
+        }
+        
+        [TestMethod]
+        public void Readable_missing_folder_contents()
+        {
+            var fs = Sys.ActorOf(Props.Create(() => new Filesystem()));
+            fs.Tell(new ListReadableContents(new ReadableFolder(this.missingDirectory)));
+            var result = ExpectMsg<Failure>();
+            Assert.IsTrue(result.Exception is IOException);
+        }
+        
+        [TestMethod]
+        public void Writable_missing_folder_contents()
+        {
+            var fs = Sys.ActorOf(Props.Create(() => new Filesystem()));
+            fs.Tell(new ListWritableContents(new WritableFolder(this.missingDirectory)));
+            var result = ExpectMsg<Failure>();
+            Assert.IsTrue(result.Exception is IOException);
+        }
+        
         [TestMethod]
         public void Deletable_missing_folder_contents()
         {
