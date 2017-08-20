@@ -180,14 +180,26 @@ namespace Filesystem.Akka
 
     public class CopyFile
     {
+        public CopyFile(ReadableFile Source, WritableFile Target)
+        {
+            this.Source = Source;
+            this.FileTarget = Target;
+            this.IsFileMode = false;
+        }
+
         public CopyFile(ReadableFile Source, WritableFolder Target)
         {
             this.Source = Source;
-            this.Target = Target;
+            this.FolderTarget = Target;
+            this.IsFileMode = true;
         }
 
         public ReadableFile Source { get; }
 
-        public WritableFolder Target { get; }
+        public WritableFolder FolderTarget { get; }
+
+        public WritableFile FileTarget { get; }
+
+        public bool IsFileMode { get; }
     }
 }
