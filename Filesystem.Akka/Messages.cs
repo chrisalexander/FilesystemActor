@@ -177,4 +177,17 @@ namespace Filesystem.Akka
 
         public WritableFolder Target { get; }
     }
+
+    public class CopyFile
+    {
+        public CopyFile(ReadableFile Source, WritableFolder Target)
+        {
+            this.Source = Source;
+            this.Target = Target;
+        }
+
+        public ReadableFile Source { get; }
+
+        public WritableFolder Target { get; }
+    }
 }
