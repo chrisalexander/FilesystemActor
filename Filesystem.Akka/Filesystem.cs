@@ -197,6 +197,20 @@ namespace Filesystem.Akka
                     Sender.Tell(new Failure() { Exception = e });
                 }
             });
+
+            Receive<CopyFile>(msg =>
+            {
+                try
+                {
+                    var targetFile = msg.Target.WriteableFile(Path.GetFileName(msg.Source.Path));
+                    File.Copy(msg.Source.Path, targetFile.Path);
+                    Sender.Tell(targetFile);
+                }
+                catch (Exception e)
+                {
+                    Sender.Tell(new Failure() { Exception = e });
+                }
+            });
         }
 
         private void CopyDirectoryContents(ReadableFolder source, WritableFolder target) => CopyDirectoryContents(new DirectoryInfo(source.Path), new DirectoryInfo(target.Path));
