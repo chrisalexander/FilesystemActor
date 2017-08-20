@@ -46,8 +46,7 @@ namespace Filesystem.Akka.Tests
             fs.Tell(new CopyFolder(new ReadableFolder(this.sourcePath), new WritableFolder(this.targetPath)));
             var result = ExpectMsg<WritableFolder>();
             Assert.AreEqual(Path.Combine(this.targetPath, Path.GetFileName(this.sourcePath)), result.Path);
-
-
+            
             var targetRoot = Path.Combine(this.targetPath, Path.GetFileName(this.sourcePath));
             Assert.IsTrue(Directory.Exists(Path.Combine(targetRoot, "A", "1")));
             Assert.IsTrue(Directory.Exists(Path.Combine(targetRoot, "A", "2")));
