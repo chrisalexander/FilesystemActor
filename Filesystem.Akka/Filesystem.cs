@@ -209,7 +209,8 @@ namespace Filesystem.Akka
                         Sender.Tell(targetFile);
                     } else
                     {
-
+                        File.Copy(msg.Source.Path, msg.FileTarget.Path, true);
+                        Sender.Tell(true);
                     }
                 }
                 catch (Exception e)
