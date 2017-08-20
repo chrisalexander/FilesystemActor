@@ -43,10 +43,7 @@ namespace Filesystem.Akka.Tests
         private string fileInMissingFolder;
 
         [TestCleanup]
-        public void Cleanup()
-        {
-            Shutdown();
-        }
+        public void Cleanup() => Shutdown();
 
         [TestInitialize]
         public void Initialise()

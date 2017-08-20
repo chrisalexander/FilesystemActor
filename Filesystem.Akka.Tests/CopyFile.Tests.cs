@@ -82,10 +82,7 @@ namespace Filesystem.Akka.Tests
         private string targetFile;
 
         [TestCleanup]
-        public void Cleanup()
-        {
-            Shutdown();
-        }
+        public void Cleanup() => Shutdown();
 
         [TestInitialize]
         public void Initialise()
@@ -143,10 +140,7 @@ namespace Filesystem.Akka.Tests
         private string targetFile;
 
         [TestCleanup]
-        public void Cleanup()
-        {
-            Shutdown();
-        }
+        public void Cleanup() => Shutdown();
 
         [TestInitialize]
         public void Initialise()

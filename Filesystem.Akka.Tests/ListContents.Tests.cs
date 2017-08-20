@@ -83,17 +83,11 @@ namespace Filesystem.Akka.Tests
         private string missingDirectory;
 
         [TestCleanup]
-        public void Cleanup()
-        {
-            Shutdown();
-        }
+        public void Cleanup() => Shutdown();
 
         [TestInitialize]
-        public void Initialise()
-        {
-            this.missingDirectory = Path.Combine(Path.GetTempPath(), "missing_" + Guid.NewGuid().ToString());
-        }
-        
+        public void Initialise() => this.missingDirectory = Path.Combine(Path.GetTempPath(), "missing_" + Guid.NewGuid().ToString());
+
         [TestMethod]
         public void Readable_missing_folder_contents()
         {
