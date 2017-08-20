@@ -164,4 +164,17 @@ namespace Filesystem.Akka
 
         public WritableFolder Target { get; }
     }
+
+    public class CopyFolderContents
+    {
+        public CopyFolderContents(ReadableFolder Source, WritableFolder Target)
+        {
+            this.Source = Source;
+            this.Target = Target;
+        }
+
+        public ReadableFolder Source { get; }
+
+        public WritableFolder Target { get; }
+    }
 }
