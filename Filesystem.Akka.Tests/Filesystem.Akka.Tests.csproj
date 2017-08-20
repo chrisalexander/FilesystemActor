@@ -64,6 +64,7 @@
     <Reference Include="System.Core" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CopyFolder.Tests.cs" />
     <Compile Include="CreateFolder.Tests.cs" />
     <Compile Include="DeleteFile.Tests.cs" />
     <Compile Include="EmptyFolder.Tests.cs" />
