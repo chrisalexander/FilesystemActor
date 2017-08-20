@@ -4,4 +4,4 @@ Actors for wrapping filesystem operations and testing.
 
 ## Build
 
-![Build](https://chrisalexander.visualstudio.com/_apis/public/build/definitions/ab649d36-7278-4f8b-a471-90963e726dd7/21/badge)
+![Build](https://chrisalexander.visualstudio.com/_apis/public/build/definitions/88807d7a-8ad7-45d4-8ef2-ad3e19bcd4e4/24/badge)
