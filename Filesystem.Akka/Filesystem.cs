@@ -218,6 +218,18 @@ namespace Filesystem.Akka
                     Sender.Tell(new Failure() { Exception = e });
                 }
             });
+
+            Receive<ReadFile>(msg =>
+            {
+                try
+                {
+                    Sender.Tell(new FileContents(File.ReadAllBytes(msg.Target.Path)));
+                }
+                catch (Exception e)
+                {
+                    Sender.Tell(new Failure() { Exception = e });
+                }
+            });
         }
 
         private void CopyDirectoryContents(ReadableFolder source, WritableFolder target) => CopyDirectoryContents(new DirectoryInfo(source.Path), new DirectoryInfo(target.Path));
