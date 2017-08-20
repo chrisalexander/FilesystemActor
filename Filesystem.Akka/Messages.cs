@@ -211,8 +211,8 @@ namespace Filesystem.Akka
 
     public class FileContents
     {
-        public FileContents(byte[] Contents) => this.Contents = Contents;
+        public FileContents(byte[] Contents) => this.Bytes = Contents;
 
-        public byte[] Contents { get; }
+        public byte[] Bytes { get; }
     }
 }
