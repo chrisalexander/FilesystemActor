@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+<package >
+  <metadata>
+    <id>FilesystemActor</id>
+    <version>$version$</version>
+    <title>FilesystemActor</title>
+    <authors>FilesystemActor project contributors</authors>
+    <owners>FilesystemActor project owners</owners>
+    <licenseUrl>https://github.com/chrisalexander/FilesystemActor/blob/master/LICENSE</licenseUrl>
+    <projectUrl>https://chrisalexander.github.io/FilesystemActor/</projectUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>A library of Akka.net actors for working with the filesystem in a more convenient way.</description>
+    <copyright>Copyright 2017 FilesystemActor contributors</copyright>
+    <tags>akka actor filesystem file io</tags>
+  </metadata>
+</package>

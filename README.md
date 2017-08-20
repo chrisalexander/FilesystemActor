@@ -1,4 +1,4 @@
-# Filesystem.Akka
+# FilesystemActor
 
 Actors for wrapping filesystem operations and testing.
 
