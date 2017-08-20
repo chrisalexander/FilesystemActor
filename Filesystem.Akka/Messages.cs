@@ -151,4 +151,17 @@ namespace Filesystem.Akka
 
         public List<DeletableFile> Files { get; }
     }
+
+    public class CopyFolder
+    {
+        public CopyFolder(ReadableFolder Source, WritableFolder Target)
+        {
+            this.Source = Source;
+            this.Target = Target;
+        }
+
+        public ReadableFolder Source { get; }
+
+        public WritableFolder Target { get; }
+    }
 }
