@@ -36,7 +36,7 @@ namespace Filesystem.Akka
         public WriteFile(WritableFile File, string Text)
         {
             this.File = File;
-            this.Stream = new MemoryStream(Encoding.UTF8.GetBytes(Text));
+            Stream = new MemoryStream(Encoding.UTF8.GetBytes(Text));
         }
 
         public WriteFile(WritableFile File, Stream Stream)
@@ -55,7 +55,7 @@ namespace Filesystem.Akka
         public OverwriteFile(OverwritableFile File, string Text)
         {
             this.File = File;
-            this.Stream = new MemoryStream(Encoding.UTF8.GetBytes(Text));
+            Stream = new MemoryStream(Encoding.UTF8.GetBytes(Text));
         }
 
         public OverwriteFile(OverwritableFile File, Stream Stream)
@@ -180,14 +180,26 @@ namespace Filesystem.Akka
 
     public class CopyFile
     {
-        public CopyFile(ReadableFile Source, WritableFolder Target)
+        public CopyFile(ReadableFile Source, WritableFile FileTarget)
         {
             this.Source = Source;
-            this.Target = Target;
+            this.FileTarget = FileTarget;
+            IsFolderMode = false;
+        }
+
+        public CopyFile(ReadableFile Source, WritableFolder FolderTarget)
+        {
+            this.Source = Source;
+            this.FolderTarget = FolderTarget;
+            IsFolderMode = true;
         }
 
         public ReadableFile Source { get; }
 
-        public WritableFolder Target { get; }
+        public WritableFolder FolderTarget { get; }
+
+        public WritableFile FileTarget { get; }
+
+        public bool IsFolderMode { get; }
     }
 }

@@ -65,6 +65,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CopyFile.Tests.cs" />
+    <Compile Include="CopyFileToFolder.Tests.cs" />
     <Compile Include="CopyFolder.Tests.cs" />
     <Compile Include="CopyFolderContents.Tests.cs" />
     <Compile Include="CreateFolder.Tests.cs" />

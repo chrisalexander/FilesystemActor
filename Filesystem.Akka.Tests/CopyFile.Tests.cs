@@ -7,113 +7,105 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 namespace Filesystem.Akka.Tests
 {
     [TestClass]
-    public class CopyFileTests : TestKit
+    public class CopyFileToFileTests : TestKit
     {
         private string sourceFile;
-        private string targetPath;
+        private string targetFile;
 
         [TestCleanup]
         public void Cleanup()
         {
             Shutdown();
             File.Delete(this.sourceFile);
-            Directory.Delete(this.targetPath, true);
+            File.Delete(this.targetFile);
         }
 
         [TestInitialize]
         public void Initialise()
         {
             this.sourceFile = Path.Combine(Path.GetTempPath(), "source_" + Guid.NewGuid().ToString() + ".txt");
-            File.WriteAllText(this.sourceFile, "Test");
+            File.WriteAllText(this.sourceFile, "Source");
 
-            this.targetPath = Path.Combine(Path.GetTempPath(), "target_" + Guid.NewGuid().ToString());
-            Directory.CreateDirectory(this.targetPath);
+            this.targetFile = Path.Combine(Path.GetTempPath(), "target_" + Guid.NewGuid().ToString() + ".txt");
         }
 
         [TestMethod]
-        public void Copy_file()
+        public void Copy_file_to_file()
         {
             var fs = Sys.ActorOf(Props.Create(() => new Filesystem()));
-            fs.Tell(new CopyFile(new ReadableFile(this.sourceFile), new WritableFolder(this.targetPath)));
-            var result = ExpectMsg<WritableFile>();
-            Assert.AreEqual(Path.Combine(this.targetPath, Path.GetFileName(this.sourceFile)), result.Path);
-            Assert.AreEqual("Test", File.ReadAllText(result.Path));
+            fs.Tell(new CopyFile(new ReadableFile(this.sourceFile), new WritableFile(this.targetFile)));
+            var result = ExpectMsg<bool>();
+            Assert.IsTrue(result);
+            Assert.AreEqual("Source", File.ReadAllText(this.targetFile));
         }
     }
 
     [TestClass]
-    public class CopyFileConflictTests : TestKit
+    public class CopyFileToFileConflictTests : TestKit
     {
         private string sourceFile;
-        private string targetPath;
+        private string targetFile;
 
         [TestCleanup]
         public void Cleanup()
         {
             Shutdown();
             File.Delete(this.sourceFile);
-            Directory.Delete(this.targetPath, true);
+            File.Delete(this.targetFile);
         }
 
         [TestInitialize]
         public void Initialise()
         {
             this.sourceFile = Path.Combine(Path.GetTempPath(), "source_" + Guid.NewGuid().ToString() + ".txt");
-            File.WriteAllText(this.sourceFile, "Test");
+            File.WriteAllText(this.sourceFile, "Source");
 
-            this.targetPath = Path.Combine(Path.GetTempPath(), "target_" + Guid.NewGuid().ToString());
-            Directory.CreateDirectory(this.targetPath);
-            File.WriteAllText(Path.Combine(this.targetPath, Path.GetFileName(this.sourceFile)), "Conflicting");
+            this.targetFile = Path.Combine(Path.GetTempPath(), "target_" + Guid.NewGuid().ToString() + ".txt");
+            File.WriteAllText(this.targetFile, "Target");
         }
 
         [TestMethod]
-        public void Copy_file_conflict()
+        public void Copy_file_to_file_conflict()
         {
             var fs = Sys.ActorOf(Props.Create(() => new Filesystem()));
-            fs.Tell(new CopyFile(new ReadableFile(this.sourceFile), new WritableFolder(this.targetPath)));
-            var result = ExpectMsg<WritableFile>();
-            Assert.AreEqual(Path.Combine(this.targetPath, Path.GetFileName(this.sourceFile)), result.Path);
-            Assert.AreEqual("Test", File.ReadAllText(result.Path));
+            fs.Tell(new CopyFile(new ReadableFile(this.sourceFile), new WritableFile(this.targetFile)));
+            var result = ExpectMsg<bool>();
+            Assert.IsTrue(result);
+            Assert.AreEqual("Source", File.ReadAllText(this.targetFile));
         }
     }
-    
+
     [TestClass]
-    public class CopyFileFileMissingTests : TestKit
+    public class CopyFileToFileSourceMissingTests : TestKit
     {
         private string sourceFile;
-        private string targetPath;
+        private string targetFile;
 
         [TestCleanup]
-        public void Cleanup()
-        {
-            Shutdown();
-            Directory.Delete(this.targetPath, true);
-        }
+        public void Cleanup() => Shutdown();
 
         [TestInitialize]
         public void Initialise()
         {
             this.sourceFile = Path.Combine(Path.GetTempPath(), "source_" + Guid.NewGuid().ToString() + ".txt");
-
-            this.targetPath = Path.Combine(Path.GetTempPath(), "target_" + Guid.NewGuid().ToString());
-            Directory.CreateDirectory(this.targetPath);
+            this.targetFile = Path.Combine(Path.GetTempPath(), "target_" + Guid.NewGuid().ToString() + ".txt");
         }
 
         [TestMethod]
-        public void Copy_file_file_missing()
+        public void Copy_file_to_file_source_missing()
         {
             var fs = Sys.ActorOf(Props.Create(() => new Filesystem()));
-            fs.Tell(new CopyFile(new ReadableFile(this.sourceFile), new WritableFolder(this.targetPath)));
+            fs.Tell(new CopyFile(new ReadableFile(this.sourceFile), new WritableFile(this.targetFile)));
             var result = ExpectMsg<Failure>();
             Assert.IsTrue(result.Exception is IOException);
         }
     }
 
     [TestClass]
-    public class CopyFileFolderMissingTests : TestKit
+    public class CopyFileToFileFolderMissingTests : TestKit
     {
         private string sourceFile;
-        private string targetPath;
+        private string targetFile;
 
         [TestCleanup]
         public void Cleanup()
@@ -126,46 +118,42 @@ namespace Filesystem.Akka.Tests
         public void Initialise()
         {
             this.sourceFile = Path.Combine(Path.GetTempPath(), "source_" + Guid.NewGuid().ToString() + ".txt");
-            File.WriteAllText(this.sourceFile, "Test");
+            File.WriteAllText(this.sourceFile, "Source");
 
-            this.targetPath = Path.Combine(Path.GetTempPath(), "target_" + Guid.NewGuid().ToString());
+            this.targetFile = Path.Combine(Path.GetTempPath(), "missing_" + Guid.NewGuid().ToString(), "target_" + Guid.NewGuid().ToString() + ".txt");
         }
 
         [TestMethod]
-        public void Copy_file_folder_missing()
+        public void Copy_file_to_file_target_directory_missing()
         {
             var fs = Sys.ActorOf(Props.Create(() => new Filesystem()));
-            fs.Tell(new CopyFile(new ReadableFile(this.sourceFile), new WritableFolder(this.targetPath)));
+            fs.Tell(new CopyFile(new ReadableFile(this.sourceFile), new WritableFile(this.targetFile)));
             var result = ExpectMsg<Failure>();
             Assert.IsTrue(result.Exception is IOException);
         }
     }
 
     [TestClass]
-    public class CopyFileBothMissingTests : TestKit
+    public class CopyFileToFileBothMissingTests : TestKit
     {
         private string sourceFile;
-        private string targetPath;
+        private string targetFile;
 
         [TestCleanup]
-        public void Cleanup()
-        {
-            Shutdown();
-            File.Delete(this.sourceFile);
-        }
+        public void Cleanup() => Shutdown();
 
         [TestInitialize]
         public void Initialise()
         {
             this.sourceFile = Path.Combine(Path.GetTempPath(), "source_" + Guid.NewGuid().ToString() + ".txt");
-            this.targetPath = Path.Combine(Path.GetTempPath(), "target_" + Guid.NewGuid().ToString());
+            this.targetFile = Path.Combine(Path.GetTempPath(), "missing_" + Guid.NewGuid().ToString(), "target_" + Guid.NewGuid().ToString() + ".txt");
         }
 
         [TestMethod]
-        public void Copy_file_folder_missing()
+        public void Copy_file_to_file_target_directory_missing()
         {
             var fs = Sys.ActorOf(Props.Create(() => new Filesystem()));
-            fs.Tell(new CopyFile(new ReadableFile(this.sourceFile), new WritableFolder(this.targetPath)));
+            fs.Tell(new CopyFile(new ReadableFile(this.sourceFile), new WritableFile(this.targetFile)));
             var result = ExpectMsg<Failure>();
             Assert.IsTrue(result.Exception is IOException);
         }

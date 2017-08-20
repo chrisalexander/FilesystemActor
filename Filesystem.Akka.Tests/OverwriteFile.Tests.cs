@@ -51,11 +51,8 @@ namespace Filesystem.Akka.Tests
         }
 
         [TestInitialize]
-        public void Initialise()
-        {
-            this.createFile = Path.Combine(Path.GetTempPath(), "create_" + Guid.NewGuid().ToString());
-        }
-        
+        public void Initialise() => this.createFile = Path.Combine(Path.GetTempPath(), "create_" + Guid.NewGuid().ToString());
+
         [TestMethod]
         public void Can_write_absent_file()
         {
@@ -81,11 +78,8 @@ namespace Filesystem.Akka.Tests
         }
 
         [TestInitialize]
-        public void Initialise()
-        {
-            this.createFileStream = Path.Combine(Path.GetTempPath(), "createstream_" + Guid.NewGuid().ToString());
-        }
-        
+        public void Initialise() => this.createFileStream = Path.Combine(Path.GetTempPath(), "createstream_" + Guid.NewGuid().ToString());
+
         [TestMethod]
         public void Can_write_with_stream()
         {

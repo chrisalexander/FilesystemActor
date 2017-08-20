@@ -41,17 +41,11 @@ namespace Filesystem.Akka.Tests
         private string missingFile;
 
         [TestCleanup]
-        public void Cleanup()
-        {
-            Shutdown();
-        }
+        public void Cleanup() => Shutdown();
 
         [TestInitialize]
-        public void Initialise()
-        {
-            this.missingFile = Path.Combine(Path.GetTempPath(), "missing_" + Guid.NewGuid().ToString());
-        }
-        
+        public void Initialise() => this.missingFile = Path.Combine(Path.GetTempPath(), "missing_" + Guid.NewGuid().ToString());
+
         [TestMethod]
         public void File_missing()
         {
