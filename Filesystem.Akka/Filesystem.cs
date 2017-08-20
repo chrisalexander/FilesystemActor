@@ -175,8 +175,8 @@ namespace Filesystem.Akka
             {
                 try
                 {
-                    var targetDirectory = msg.Target.ChildWriteableFolder(Path.GetDirectoryName(msg.Source.Path));
-                    CopyDirectoryContents(msg.Source, msg.Target);
+                    var targetDirectory = msg.Target.ChildWriteableFolder(Path.GetFileName(msg.Source.Path));
+                    CopyDirectoryContents(msg.Source, targetDirectory);
                     Sender.Tell(targetDirectory);
                 }
                 catch (Exception e)
