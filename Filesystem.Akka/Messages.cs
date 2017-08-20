@@ -202,4 +202,17 @@ namespace Filesystem.Akka
 
         public bool IsFolderMode { get; }
     }
+
+    public class ReadFile
+    {
+        public ReadFile(ReadableFile Target) => this.Target = Target;
+        public ReadableFile Target { get; }
+    }
+
+    public class FileContents
+    {
+        public FileContents(byte[] Contents) => this.Contents = Contents;
+
+        public byte[] Contents { get; }
+    }
 }
