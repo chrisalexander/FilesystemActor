@@ -7,7 +7,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 namespace Filesystem.Akka.Tests
 {
     [TestClass]
-    public class CopyFileTests : TestKit
+    public class CopyFileToFolderTests : TestKit
     {
         private string sourceFile;
         private string targetPath;
@@ -31,7 +31,7 @@ namespace Filesystem.Akka.Tests
         }
 
         [TestMethod]
-        public void Copy_file()
+        public void Copy_file_to_folder()
         {
             var fs = Sys.ActorOf(Props.Create(() => new Filesystem()));
             fs.Tell(new CopyFile(new ReadableFile(this.sourceFile), new WritableFolder(this.targetPath)));
@@ -42,7 +42,7 @@ namespace Filesystem.Akka.Tests
     }
 
     [TestClass]
-    public class CopyFileConflictTests : TestKit
+    public class CopyFileToFolderConflictTests : TestKit
     {
         private string sourceFile;
         private string targetPath;
@@ -67,7 +67,7 @@ namespace Filesystem.Akka.Tests
         }
 
         [TestMethod]
-        public void Copy_file_conflict()
+        public void Copy_file_to_folder_conflict()
         {
             var fs = Sys.ActorOf(Props.Create(() => new Filesystem()));
             fs.Tell(new CopyFile(new ReadableFile(this.sourceFile), new WritableFolder(this.targetPath)));
@@ -78,7 +78,7 @@ namespace Filesystem.Akka.Tests
     }
     
     [TestClass]
-    public class CopyFileFileMissingTests : TestKit
+    public class CopyFileToFolderFileMissingTests : TestKit
     {
         private string sourceFile;
         private string targetPath;
@@ -100,7 +100,7 @@ namespace Filesystem.Akka.Tests
         }
 
         [TestMethod]
-        public void Copy_file_file_missing()
+        public void Copy_file_to_folder_file_missing()
         {
             var fs = Sys.ActorOf(Props.Create(() => new Filesystem()));
             fs.Tell(new CopyFile(new ReadableFile(this.sourceFile), new WritableFolder(this.targetPath)));
@@ -110,7 +110,7 @@ namespace Filesystem.Akka.Tests
     }
 
     [TestClass]
-    public class CopyFileFolderMissingTests : TestKit
+    public class CopyFileToFolderFolderMissingTests : TestKit
     {
         private string sourceFile;
         private string targetPath;
@@ -132,7 +132,7 @@ namespace Filesystem.Akka.Tests
         }
 
         [TestMethod]
-        public void Copy_file_folder_missing()
+        public void Copy_file_to_folder_folder_missing()
         {
             var fs = Sys.ActorOf(Props.Create(() => new Filesystem()));
             fs.Tell(new CopyFile(new ReadableFile(this.sourceFile), new WritableFolder(this.targetPath)));
@@ -142,7 +142,7 @@ namespace Filesystem.Akka.Tests
     }
 
     [TestClass]
-    public class CopyFileBothMissingTests : TestKit
+    public class CopyFileToFolderBothMissingTests : TestKit
     {
         private string sourceFile;
         private string targetPath;
@@ -162,7 +162,7 @@ namespace Filesystem.Akka.Tests
         }
 
         [TestMethod]
-        public void Copy_file_folder_missing()
+        public void Copy_file_to_folder_both_missing()
         {
             var fs = Sys.ActorOf(Props.Create(() => new Filesystem()));
             fs.Tell(new CopyFile(new ReadableFile(this.sourceFile), new WritableFolder(this.targetPath)));
