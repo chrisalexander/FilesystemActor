@@ -170,6 +170,46 @@ namespace Filesystem.Akka
                     Sender.Tell(new Failure() { Exception = e });
                 }
             });
+
+            Receive<CopyFolder>(msg =>
+            {
+                try
+                {
+                    var targetDirectory = msg.Target.ChildWriteableFolder(Path.GetDirectoryName(msg.Source.Path));
+                    CopyDirectoryContents(msg.Source, msg.Target);
+                    Sender.Tell(targetDirectory);
+                }
+                catch (Exception e)
+                {
+                    Sender.Tell(new Failure() { Exception = e });
+                }
+            });
+        }
+
+        private void CopyDirectoryContents(ReadableFolder source, WritableFolder target)
+        {
+            CopyDirectoryContents(new DirectoryInfo(source.Path), new DirectoryInfo(target.Path));
+        }
+
+        private void CopyDirectoryContents(DirectoryInfo source, DirectoryInfo target)
+        {
+            if (source.FullName.ToLower() == target.FullName.ToLower())
+            {
+                return;
+            }
+
+            Directory.CreateDirectory(target.FullName);
+            
+            foreach (var fileInfo in source.GetFiles())
+            {
+                fileInfo.CopyTo(Path.Combine(target.ToString(), fileInfo.Name), true);
+            }
+            
+            foreach (var subDirectoryInfo in source.GetDirectories())
+            {
+                var nextTargetSubDir = target.CreateSubdirectory(subDirectoryInfo.Name);
+                CopyDirectoryContents(subDirectoryInfo, nextTargetSubDir);
+            }
         }
     }
 }
