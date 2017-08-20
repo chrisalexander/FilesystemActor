@@ -199,10 +199,7 @@ namespace Filesystem.Akka
             });
         }
 
-        private void CopyDirectoryContents(ReadableFolder source, WritableFolder target)
-        {
-            CopyDirectoryContents(new DirectoryInfo(source.Path), new DirectoryInfo(target.Path));
-        }
+        private void CopyDirectoryContents(ReadableFolder source, WritableFolder target) => CopyDirectoryContents(new DirectoryInfo(source.Path), new DirectoryInfo(target.Path));
 
         private void CopyDirectoryContents(DirectoryInfo source, DirectoryInfo target)
         {
