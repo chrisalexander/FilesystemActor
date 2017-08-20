@@ -184,14 +184,14 @@ namespace Filesystem.Akka
         {
             this.Source = Source;
             this.FileTarget = Target;
-            this.IsFileMode = false;
+            this.IsFolderMode = false;
         }
 
         public CopyFile(ReadableFile Source, WritableFolder Target)
         {
             this.Source = Source;
             this.FolderTarget = Target;
-            this.IsFileMode = true;
+            this.IsFolderMode = true;
         }
 
         public ReadableFile Source { get; }
@@ -200,6 +200,6 @@ namespace Filesystem.Akka
 
         public WritableFile FileTarget { get; }
 
-        public bool IsFileMode { get; }
+        public bool IsFolderMode { get; }
     }
 }

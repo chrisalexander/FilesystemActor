@@ -202,9 +202,15 @@ namespace Filesystem.Akka
             {
                 try
                 {
-                    var targetFile = msg.FolderTarget.WriteableFile(Path.GetFileName(msg.Source.Path));
-                    File.Copy(msg.Source.Path, targetFile.Path, true);
-                    Sender.Tell(targetFile);
+                    if (msg.IsFolderMode)
+                    {
+                        var targetFile = msg.FolderTarget.WriteableFile(Path.GetFileName(msg.Source.Path));
+                        File.Copy(msg.Source.Path, targetFile.Path, true);
+                        Sender.Tell(targetFile);
+                    } else
+                    {
+
+                    }
                 }
                 catch (Exception e)
                 {
