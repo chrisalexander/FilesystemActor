@@ -33,7 +33,7 @@ namespace FilesystemActor.Tests
         public void Copy_file_to_file()
         {
             var fs = Sys.ActorOf(Props.Create(() => new Filesystem()));
-            fs.Tell(new CopyFile(new ReadableFile(this.sourceFile), new WritableFile(this.targetFile)));
+            fs.Tell(new CopyFile(new ReadableFile(this.sourceFile), new OverwritableFile(this.targetFile)));
             var result = ExpectMsg<bool>();
             Assert.IsTrue(result);
             Assert.AreEqual("Source", File.ReadAllText(this.targetFile));
@@ -68,7 +68,7 @@ namespace FilesystemActor.Tests
         public void Copy_file_to_file_conflict()
         {
             var fs = Sys.ActorOf(Props.Create(() => new Filesystem()));
-            fs.Tell(new CopyFile(new ReadableFile(this.sourceFile), new WritableFile(this.targetFile)));
+            fs.Tell(new CopyFile(new ReadableFile(this.sourceFile), new OverwritableFile(this.targetFile)));
             var result = ExpectMsg<bool>();
             Assert.IsTrue(result);
             Assert.AreEqual("Source", File.ReadAllText(this.targetFile));
@@ -95,7 +95,7 @@ namespace FilesystemActor.Tests
         public void Copy_file_to_file_source_missing()
         {
             var fs = Sys.ActorOf(Props.Create(() => new Filesystem()));
-            fs.Tell(new CopyFile(new ReadableFile(this.sourceFile), new WritableFile(this.targetFile)));
+            fs.Tell(new CopyFile(new ReadableFile(this.sourceFile), new OverwritableFile(this.targetFile)));
             var result = ExpectMsg<Failure>();
             Assert.IsTrue(result.Exception is IOException);
         }
@@ -127,7 +127,7 @@ namespace FilesystemActor.Tests
         public void Copy_file_to_file_target_directory_missing()
         {
             var fs = Sys.ActorOf(Props.Create(() => new Filesystem()));
-            fs.Tell(new CopyFile(new ReadableFile(this.sourceFile), new WritableFile(this.targetFile)));
+            fs.Tell(new CopyFile(new ReadableFile(this.sourceFile), new OverwritableFile(this.targetFile)));
             var result = ExpectMsg<Failure>();
             Assert.IsTrue(result.Exception is IOException);
         }
@@ -153,7 +153,7 @@ namespace FilesystemActor.Tests
         public void Copy_file_to_file_target_directory_missing()
         {
             var fs = Sys.ActorOf(Props.Create(() => new Filesystem()));
-            fs.Tell(new CopyFile(new ReadableFile(this.sourceFile), new WritableFile(this.targetFile)));
+            fs.Tell(new CopyFile(new ReadableFile(this.sourceFile), new OverwritableFile(this.targetFile)));
             var result = ExpectMsg<Failure>();
             Assert.IsTrue(result.Exception is IOException);
         }
