@@ -38,6 +38,31 @@ namespace FilesystemActor.Tests
     }
 
     [TestClass]
+    public class EmptyFolderMissingTests : TestKit
+    {
+        private string missingFolder;
+
+        [TestCleanup]
+        public void Cleanup() => Shutdown();
+
+        [TestInitialize]
+        public void Initialise()
+        {
+            this.missingFolder = Path.Combine(Path.GetTempPath(), "missing_" + Guid.NewGuid().ToString());
+        }
+
+        [TestMethod]
+        public void Can_empty_missing_folder()
+        {
+            var fs = Sys.ActorOf(Props.Create(() => new Filesystem()));
+            fs.Tell(new EmptyFolder(new DeletableFolder(this.missingFolder)));
+            var result = ExpectMsg<bool>();
+            Assert.IsTrue(result);
+            Assert.IsFalse(Directory.Exists(this.missingFolder));
+        }
+    }
+
+    [TestClass]
     public class EmptyFolderPopulatedTests : TestKit
     {
         private string populatedFolder;
