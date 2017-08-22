@@ -27,9 +27,9 @@ namespace FilesystemActor
 
             Receive<CreateFolder>(msg =>
             {
-                var folder = msg.Folder.ChildWriteableFolder(msg.FolderName);
-                Directory.CreateDirectory(folder.Path);
-                Sender.Tell(folder);
+                var newFolder = msg.Folder.ChildWriteableFolder(msg.FolderName);
+                Directory.CreateDirectory(newFolder.Path);
+                Sender.Tell(newFolder);
             });
 
             Receive<WriteFile>(msg =>
@@ -85,6 +85,13 @@ namespace FilesystemActor
             {
                 try
                 {
+                    // Missing directories are empty directories
+                    if (!Directory.Exists(msg.Folder.Path))
+                    {
+                        Sender.Tell(true);
+                        return;
+                    }
+
                     var files = Directory.GetFiles(msg.Folder.Path);
 
                     foreach (var file in files)
