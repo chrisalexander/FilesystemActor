@@ -5,8 +5,14 @@ using Akka.Actor;
 
 namespace FilesystemActor
 {
+    /// <summary>
+    /// An actor for interacting with the filesystem.
+    /// </summary>
     public class Filesystem : ReceiveActor
     {
+        /// <summary>
+        /// Create a new Filesystem actor.
+        /// </summary>
         public Filesystem()
         {
             Receive<FolderExists>(msg =>
