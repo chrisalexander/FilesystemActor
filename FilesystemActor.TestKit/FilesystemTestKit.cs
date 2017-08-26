@@ -1,9 +1,12 @@
-﻿using Akka.Actor;
+﻿using System.Collections.Generic;
+using Akka.Actor;
 
 namespace FilesystemActor.TestKit
 {
     public class FilesystemTestKit : ReceiveActor
     {
+        private readonly Dictionary<string, object> drives = new Dictionary<string, object>();
+
         public FilesystemTestKit() => Become(Configuring);
 
         private void Configuring()

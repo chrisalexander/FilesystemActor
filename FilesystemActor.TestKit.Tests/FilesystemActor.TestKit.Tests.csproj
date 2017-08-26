@@ -48,6 +48,8 @@
     <Reference Include="System.Core" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Model\File.Tests.cs" />
+    <Compile Include="Model\Folder.Tests.cs" />
     <Compile Include="Model\LocationDefinition.Tests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
