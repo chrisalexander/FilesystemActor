@@ -24,7 +24,9 @@ namespace FilesystemActor.TestKit
 
             Receive<CreateTestFile>(msg =>
             {
-
+                var location = new LocationDefinition(msg.Path);
+                var root = this.drives.GetOrAdd(location.Drive, name => new Folder(name));
+                root.CreateFile(location.Folders, location.Filename);
             });
 
             Receive<LockTestFile>(msg =>
@@ -63,7 +65,22 @@ namespace FilesystemActor.TestKit
 
             Receive<FileExists>(msg =>
             {
+                var location = new LocationDefinition(msg.File.Path);
 
+                try
+                {
+                    var root = this.drives[location.Drive];
+                    foreach (var subfolder in location.Folders)
+                    {
+                        root = root.Folders[subfolder];
+                    }
+                    
+                    Sender.Tell(root.Files.ContainsKey(location.Filename));
+                }
+                catch (Exception)
+                {
+                    Sender.Tell(false);
+                }
             });
 
             Receive<CreateFolder>(msg =>

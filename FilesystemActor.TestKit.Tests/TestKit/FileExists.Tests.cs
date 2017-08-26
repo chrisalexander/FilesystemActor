@@ -4,30 +4,30 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 namespace FilesystemActor.TestKit.Tests.TestKit
 {
     [TestClass]
-    public class FolderExistsTests : Akka.TestKit.VsTest.TestKit
+    public class FileExistsTests : Akka.TestKit.VsTest.TestKit
     {
         [TestCleanup]
         public void Cleanup() => Shutdown();
 
         [TestMethod]
-        public void Folder_doesnt_exist()
+        public void File_doesnt_exist()
         {
             var tk = Sys.ActorOf(Props.Create(() => new FilesystemTestKit()));
-            var folder = new ReadableFolder(@"C:\users\test\folder");
+            var file = new ReadableFile(@"C:\users\test\folder\file.txt");
             tk.Tell(new SetupComplete());
-            tk.Tell(new FolderExists(folder));
+            tk.Tell(new FileExists(file));
             var result = ExpectMsg<bool>();
             Assert.IsFalse(result);
         }
 
         [TestMethod]
-        public void Folder_exists()
+        public void File_exists()
         {
             var tk = Sys.ActorOf(Props.Create(() => new FilesystemTestKit()));
-            var folder = new ReadableFolder(@"C:\users\test\folder");
-            tk.Tell(new CreateTestFolder(folder.Path));
+            var file = new ReadableFile(@"C:\users\test\folder\file.txt");
+            tk.Tell(new CreateTestFile(file.Path));
             tk.Tell(new SetupComplete());
-            tk.Tell(new FolderExists(folder));
+            tk.Tell(new FileExists(file));
             var result = ExpectMsg<bool>();
             Assert.IsTrue(result);
         }
