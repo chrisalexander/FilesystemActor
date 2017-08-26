@@ -52,6 +52,7 @@
     <Compile Include="FilesystemTestKit.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="TestKitMessages.cs" />
+    <Compile Include="TestKitModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\FilesystemActor\FilesystemActor.csproj">

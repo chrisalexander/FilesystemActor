@@ -69,6 +69,41 @@ namespace FilesystemActor.TestKit
             {
 
             });
+
+            Receive<ListReadableContents>(msg =>
+            {
+
+            });
+
+            Receive<ListWritableContents>(msg =>
+            {
+
+            });
+
+            Receive<ListDeletableContents>(msg =>
+            {
+
+            });
+
+            Receive<CopyFolder>(msg =>
+            {
+
+            });
+
+            Receive<CopyFolderContents>(msg =>
+            {
+
+            });
+
+            Receive<CopyFile>(msg =>
+            {
+
+            });
+
+            Receive<ReadFile>(msg =>
+            {
+
+            });
         }
     }
 }
