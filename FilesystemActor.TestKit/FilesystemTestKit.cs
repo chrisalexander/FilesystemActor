@@ -1,11 +1,13 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Concurrent;
 using Akka.Actor;
+using Filesystem.Akka.TestKit;
 
 namespace FilesystemActor.TestKit
 {
     public class FilesystemTestKit : ReceiveActor
     {
-        private readonly Dictionary<string, object> drives = new Dictionary<string, object>();
+        private readonly ConcurrentDictionary<string, Folder> drives = new ConcurrentDictionary<string, Folder>();
 
         public FilesystemTestKit() => Become(Configuring);
 
@@ -15,7 +17,9 @@ namespace FilesystemActor.TestKit
 
             Receive<CreateTestFolder>(msg =>
             {
-
+                var location = new LocationDefinition(msg.Path);
+                var root = this.drives.GetOrAdd(location.Drive, name => new Folder(name));
+                root.CreateFolder(location.Folders);
             });
 
             Receive<CreateTestFile>(msg =>
@@ -27,6 +31,11 @@ namespace FilesystemActor.TestKit
             {
 
             });
+
+            Receive<UnlockTestFile>(msg =>
+            {
+
+            });
         }
 
         private void Filesystem()
@@ -35,7 +44,21 @@ namespace FilesystemActor.TestKit
 
             Receive<FolderExists>(msg =>
             {
+                var location = new LocationDefinition(msg.Folder.Path);
 
+                try
+                {
+                    var root = this.drives[location.Drive];
+                    foreach (var subfolder in location.Folders)
+                    {
+                        root = root.Folders[subfolder];
+                    }
+                    Sender.Tell(true);
+                }
+                catch (Exception)
+                {
+                    Sender.Tell(false);
+                }
             });
 
             Receive<FileExists>(msg =>
