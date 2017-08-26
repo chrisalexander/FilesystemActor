@@ -1,5 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
+using System.Collections.Concurrent;
 using System.Linq;
 
 namespace Filesystem.Akka.TestKit
@@ -10,9 +10,9 @@ namespace Filesystem.Akka.TestKit
 
         public string Name { get; }
 
-        public Dictionary<string, Folder> Folders = new Dictionary<string, Folder>();
+        public ConcurrentDictionary<string, Folder> Folders = new ConcurrentDictionary<string, Folder>();
 
-        public Dictionary<string, File> Files = new Dictionary<string, File>();
+        public ConcurrentDictionary<string, File> Files = new ConcurrentDictionary<string, File>();
 
         public void CreateFolder(string[] folderPath)
         {
@@ -21,7 +21,7 @@ namespace Filesystem.Akka.TestKit
                 return;
             }
 
-            var subfolder = GetSubFolder(folderPath[0]);
+            var subfolder = this.Folders.GetOrAdd(folderPath[0], name => new Folder(name));
 
             if (folderPath.Length > 1)
             {
@@ -33,30 +33,13 @@ namespace Filesystem.Akka.TestKit
         {
             if (folderPath.Length > 0)
             {
-                var subfolder = GetSubFolder(folderPath[0]);
+                var subfolder = this.Folders.GetOrAdd(folderPath[0], name => new Folder(name));
                 return subfolder.CreateFile(folderPath.Skip(1).ToArray(), fileName);
             }
             else
             {
-                if (!this.Files.TryGetValue(fileName, out var file))
-                {
-                    file = new File(fileName);
-                    this.Files[fileName] = file;
-                }
-
-                return file;
+                return this.Files.GetOrAdd(fileName, name => new File(name));
             }
-        }
-
-        private Folder GetSubFolder(string folderName)
-        {
-            if (!this.Folders.TryGetValue(folderName, out var subfolder))
-            {
-                subfolder = new Folder(folderName);
-                this.Folders[folderName] = subfolder;
-            }
-
-            return subfolder;
         }
     }
 
