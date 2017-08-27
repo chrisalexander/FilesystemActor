@@ -76,6 +76,7 @@
     <Compile Include="TestKit\EmptyFolder.Tests.cs" />
     <Compile Include="TestKit\FileExists.Tests.cs" />
     <Compile Include="TestKit\FolderExists.Tests.cs" />
+    <Compile Include="TestKit\ListContents.Tests.cs" />
     <Compile Include="TestKit\SetupState.Tests.cs" />
   </ItemGroup>
   <ItemGroup>
