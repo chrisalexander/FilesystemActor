@@ -80,6 +80,7 @@
     <Compile Include="TestKit\OverwriteFile.Tests.cs" />
     <Compile Include="TestKit\ReadFile.Tests.cs" />
     <Compile Include="TestKit\SetupState.Tests.cs" />
+    <Compile Include="TestKit\WriteFile.Tests.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
