@@ -81,7 +81,7 @@ namespace FilesystemActor.Tests
         public void Initialise() => this.createFileStream = Path.Combine(Path.GetTempPath(), "createstream_" + Guid.NewGuid().ToString());
 
         [TestMethod]
-        public void Can_write_with_stream()
+        public void Can_overwrite_with_stream()
         {
             var fs = Sys.ActorOf(Props.Create(() => new Filesystem()));
             fs.Tell(new OverwriteFile(new OverwritableFile(this.createFileStream), new MemoryStream(Encoding.ASCII.GetBytes("Test Weird ʣ Character"))));
