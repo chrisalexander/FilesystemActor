@@ -28,7 +28,7 @@ namespace FilesystemActor.Tests
         }
 
         [TestMethod]
-        public void File_exists()
+        public void Read_existing_file()
         {
             var fs = Sys.ActorOf(Props.Create(() => new Filesystem()));
             fs.Tell(new ReadFile(new ReadableFile(this.existingFile)));
@@ -52,7 +52,7 @@ namespace FilesystemActor.Tests
         }
 
         [TestMethod]
-        public void File_exists()
+        public void Read_missing_file()
         {
             var fs = Sys.ActorOf(Props.Create(() => new Filesystem()));
             fs.Tell(new ReadFile(new ReadableFile(this.missingFile)));
