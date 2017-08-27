@@ -73,6 +73,7 @@
     <Compile Include="TestKit\CreateFolder.Tests.cs" />
     <Compile Include="TestKit\DeleteFile.Tests.cs" />
     <Compile Include="TestKit\DeleteFolder.Tests.cs" />
+    <Compile Include="TestKit\EmptyFolder.Tests.cs" />
     <Compile Include="TestKit\FileExists.Tests.cs" />
     <Compile Include="TestKit\FolderExists.Tests.cs" />
     <Compile Include="TestKit\SetupState.Tests.cs" />
