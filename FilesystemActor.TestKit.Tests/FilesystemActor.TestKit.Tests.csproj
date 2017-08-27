@@ -67,6 +67,7 @@
     <Compile Include="Model\Folder.Tests.cs" />
     <Compile Include="Model\LocationDefinition.Tests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="TestKit\CopyFile.Tests.cs" />
     <Compile Include="TestKit\FileExists.Tests.cs" />
     <Compile Include="TestKit\FolderExists.Tests.cs" />
     <Compile Include="TestKit\SetupState.Tests.cs" />
