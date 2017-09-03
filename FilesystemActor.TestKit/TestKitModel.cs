@@ -29,6 +29,17 @@ namespace Filesystem.Akka.TestKit
             }
         }
 
+        public Folder GetFolder(string[] folderPath)
+        {
+            if (folderPath.Length < 1)
+            {
+                return this;
+            }
+
+            this.Folders.TryGetValue(folderPath[0], out var folder);
+            return folder.GetFolder(folderPath.Skip(1).ToArray());
+        }
+
         public File CreateFile(string[] folderPath, string fileName)
         {
             if (folderPath.Length > 0)
@@ -41,6 +52,20 @@ namespace Filesystem.Akka.TestKit
                 return this.Files.GetOrAdd(fileName, name => new File(name));
             }
         }
+
+        public File GetFile(string[] folderPath, string fileName)
+        {
+            if (folderPath.Length > 0)
+            {
+                this.Folders.TryGetValue(folderPath[0], out var subfolder);
+                return subfolder.GetFile(folderPath.Skip(1).ToArray(), fileName);
+            }
+            else
+            {
+                this.Files.TryGetValue(fileName, out var file);
+                return file;
+            }
+        }
     }
 
     public class File
@@ -50,6 +75,8 @@ namespace Filesystem.Akka.TestKit
         public string Name { get; }
 
         public bool Locked { get; set; }
+
+        public byte[] Contents { get; set; }
     }
 
     public class LocationDefinition

@@ -13,7 +13,7 @@
 
     public class CreateTestFile
     {
-        public CreateTestFile(string Path, string Contents = "", bool Locked = false)
+        public CreateTestFile(string Path, byte[] Contents = null, bool Locked = false)
         {
             this.Path = Path;
             this.Contents = Contents;
@@ -22,7 +22,7 @@
 
         public string Path { get; }
 
-        public string Contents { get; }
+        public byte[] Contents { get; }
 
         public bool Locked { get; }
     }

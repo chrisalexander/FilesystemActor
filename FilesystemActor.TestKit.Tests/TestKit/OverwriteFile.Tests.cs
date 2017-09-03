@@ -16,7 +16,7 @@ namespace FilesystemActor.TestKit.Tests.TestKit
         {
             var tk = Sys.ActorOf(Props.Create(() => new FilesystemTestKit()));
             var file = new OverwritableFile(@"C:\users\test\folder\file.txt");
-            tk.Tell(new CreateTestFile(file.Path, "InitialContents"));
+            tk.Tell(new CreateTestFile(file.Path, Encoding.ASCII.GetBytes("InitialContents")));
             tk.Tell(new SetupComplete());
 
             tk.Tell(new FileExists(file));
@@ -54,7 +54,7 @@ namespace FilesystemActor.TestKit.Tests.TestKit
         {
             var tk = Sys.ActorOf(Props.Create(() => new FilesystemTestKit()));
             var file = new OverwritableFile(@"C:\users\test\folder\file.txt");
-            tk.Tell(new CreateTestFile(file.Path, "InitialContents"));
+            tk.Tell(new CreateTestFile(file.Path, Encoding.ASCII.GetBytes("InitialContents")));
             tk.Tell(new SetupComplete());
 
             tk.Tell(new FileExists(file));
@@ -75,7 +75,7 @@ namespace FilesystemActor.TestKit.Tests.TestKit
         {
             var tk = Sys.ActorOf(Props.Create(() => new FilesystemTestKit()));
             var file = new OverwritableFile(@"C:\users\test\folder\file.txt");
-            tk.Tell(new CreateTestFile(file.Path, "InitialContents", true));
+            tk.Tell(new CreateTestFile(file.Path, Encoding.ASCII.GetBytes("InitialContents"), true));
             tk.Tell(new SetupComplete());
 
             tk.Tell(new FileExists(file));

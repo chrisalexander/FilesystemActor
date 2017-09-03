@@ -1,4 +1,5 @@
 ﻿using System.IO;
+using System.Text;
 using Akka.Actor;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
@@ -22,9 +23,9 @@ namespace FilesystemActor.TestKit.Tests.TestKit
             tk.Tell(new CreateTestFolder(Path.Combine(rootFolder.Path, "A", "2")));
             tk.Tell(new CreateTestFolder(Path.Combine(rootFolder.Path, "B", "1")));
             tk.Tell(new CreateTestFolder(Path.Combine(rootFolder.Path, "B", "2")));
-            tk.Tell(new CreateTestFile(Path.Combine(rootFolder.Path, "A", "1", "one.txt"), "One"));
-            tk.Tell(new CreateTestFile(Path.Combine(rootFolder.Path, "A", "two.txt"), "Two"));
-            tk.Tell(new CreateTestFile(Path.Combine(rootFolder.Path, "three.txt"), "Three"));
+            tk.Tell(new CreateTestFile(Path.Combine(rootFolder.Path, "A", "1", "one.txt"), Encoding.ASCII.GetBytes("One")));
+            tk.Tell(new CreateTestFile(Path.Combine(rootFolder.Path, "A", "two.txt"), Encoding.ASCII.GetBytes("Two")));
+            tk.Tell(new CreateTestFile(Path.Combine(rootFolder.Path, "three.txt"), Encoding.ASCII.GetBytes("Three")));
 
             tk.Tell(new SetupComplete());
 
@@ -76,7 +77,7 @@ namespace FilesystemActor.TestKit.Tests.TestKit
             var tk = Sys.ActorOf(Props.Create(() => new FilesystemTestKit()));
             var targetFolder = new WritableFolder(@"D:\Target\");
             tk.Tell(new CreateTestFolder(targetFolder.Path));
-            tk.Tell(new CreateTestFile(Path.Combine(targetFolder.Path, "A", "1", "one.txt"), "One"));
+            tk.Tell(new CreateTestFile(Path.Combine(targetFolder.Path, "A", "1", "one.txt"), Encoding.ASCII.GetBytes("One")));
 
             tk.Tell(new SetupComplete());
 
@@ -109,7 +110,7 @@ namespace FilesystemActor.TestKit.Tests.TestKit
             var targetFolder = new WritableFolder(@"D:\Target\");
             tk.Tell(new CreateTestFolder(rootFolder.Path));
             tk.Tell(new CreateTestFolder(Path.Combine(rootFolder.Path, "A", "1")));
-            tk.Tell(new CreateTestFile(Path.Combine(rootFolder.Path, "A", "1", "one.txt"), "One"));
+            tk.Tell(new CreateTestFile(Path.Combine(rootFolder.Path, "A", "1", "one.txt"), Encoding.ASCII.GetBytes("One")));
 
             tk.Tell(new SetupComplete());
 

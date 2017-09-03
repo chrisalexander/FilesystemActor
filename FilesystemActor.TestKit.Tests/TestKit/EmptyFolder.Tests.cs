@@ -1,4 +1,5 @@
 ﻿using System.IO;
+using System.Text;
 using Akka.Actor;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
@@ -92,7 +93,7 @@ namespace FilesystemActor.TestKit.Tests.TestKit
             var tk = Sys.ActorOf(Props.Create(() => new FilesystemTestKit()));
             var folder = new DeletableFolder(@"c:\data\folder");
             tk.Tell(new CreateTestFolder(folder.Path));
-            tk.Tell(new CreateTestFile(Path.Combine(folder.Path, "file.txt"), string.Empty, true));
+            tk.Tell(new CreateTestFile(Path.Combine(folder.Path, "file.txt"), Encoding.ASCII.GetBytes(string.Empty), true));
             tk.Tell(new SetupComplete());
 
             tk.Tell(new ListReadableContents(folder));

@@ -17,7 +17,7 @@ namespace FilesystemActor.TestKit.Tests.TestKit
         {
             var tk = Sys.ActorOf(Props.Create(() => new FilesystemTestKit()));
             var file = new ReadableFile(@"C:\users\test\folder\file.txt");
-            tk.Tell(new CreateTestFile(file.Path, "Contents"));
+            tk.Tell(new CreateTestFile(file.Path, Encoding.ASCII.GetBytes("Contents")));
             tk.Tell(new SetupComplete());
 
             tk.Tell(new ReadFile(file));

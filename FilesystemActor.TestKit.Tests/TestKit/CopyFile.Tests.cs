@@ -1,4 +1,5 @@
 ﻿using System.IO;
+using System.Text;
 using Akka.Actor;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
@@ -17,7 +18,7 @@ namespace FilesystemActor.TestKit.Tests.TestKit
 
             var sourceFile = new ReadableFile(@"C:\users\test\folder\file.txt");
             var targetFile = new OverwritableFile(@"\\shared\folder\file2.txt");
-            tk.Tell(new CreateTestFile(sourceFile.Path, "TestString"));
+            tk.Tell(new CreateTestFile(sourceFile.Path, Encoding.ASCII.GetBytes("TestString")));
             tk.Tell(new CreateTestFolder(@"\\shared\folder\"));
             tk.Tell(new SetupComplete());
 
@@ -41,8 +42,8 @@ namespace FilesystemActor.TestKit.Tests.TestKit
 
             var sourceFile = new ReadableFile(@"C:\users\test\folder\file.txt");
             var targetFile = new OverwritableFile(@"\\shared\folder\file2.txt");
-            tk.Tell(new CreateTestFile(sourceFile.Path, "TestString"));
-            tk.Tell(new CreateTestFile(targetFile.Path, "ConflictTestString"));
+            tk.Tell(new CreateTestFile(sourceFile.Path, Encoding.ASCII.GetBytes("TestString")));
+            tk.Tell(new CreateTestFile(targetFile.Path, Encoding.ASCII.GetBytes("ConflictTestString")));
             tk.Tell(new SetupComplete());
 
             tk.Tell(new CopyFile(sourceFile, targetFile));
@@ -84,7 +85,7 @@ namespace FilesystemActor.TestKit.Tests.TestKit
 
             var sourceFile = new ReadableFile(@"C:\users\test\folder\file.txt");
             var targetFile = new OverwritableFile(@"\\shared\folder\file2.txt");
-            tk.Tell(new CreateTestFile(sourceFile.Path, "TestString"));
+            tk.Tell(new CreateTestFile(sourceFile.Path, Encoding.ASCII.GetBytes("TestString")));
             tk.Tell(new SetupComplete());
 
             tk.Tell(new CopyFile(sourceFile, targetFile));
@@ -128,7 +129,7 @@ namespace FilesystemActor.TestKit.Tests.TestKit
 
             var sourceFile = new ReadableFile(@"C:\users\test\folder\file.txt");
             var targetFile = new OverwritableFile(@"\\shared\folder\file2.txt");
-            tk.Tell(new CreateTestFile(sourceFile.Path, "TestString"));
+            tk.Tell(new CreateTestFile(sourceFile.Path, Encoding.ASCII.GetBytes("TestString")));
             tk.Tell(new CreateTestFolder(@"\\shared\folder\"));
             tk.Tell(new SetupComplete());
 
@@ -152,8 +153,8 @@ namespace FilesystemActor.TestKit.Tests.TestKit
 
             var sourceFile = new ReadableFile(@"C:\users\test\folder\file.txt");
             var targetFile = new OverwritableFile(@"\\shared\folder\file2.txt");
-            tk.Tell(new CreateTestFile(sourceFile.Path, "TestString"));
-            tk.Tell(new CreateTestFile(targetFile.Path, "ConflictTestString"));
+            tk.Tell(new CreateTestFile(sourceFile.Path, Encoding.ASCII.GetBytes("TestString")));
+            tk.Tell(new CreateTestFile(targetFile.Path, Encoding.ASCII.GetBytes("ConflictTestString")));
             tk.Tell(new SetupComplete());
 
             tk.Tell(new CopyFile(sourceFile, targetFile));
@@ -195,7 +196,7 @@ namespace FilesystemActor.TestKit.Tests.TestKit
 
             var sourceFile = new ReadableFile(@"C:\users\test\folder\file.txt");
             var targetFile = new OverwritableFile(@"\\shared\folder\file2.txt");
-            tk.Tell(new CreateTestFile(sourceFile.Path, "TestString"));
+            tk.Tell(new CreateTestFile(sourceFile.Path, Encoding.ASCII.GetBytes("TestString")));
             tk.Tell(new SetupComplete());
 
             tk.Tell(new CopyFile(sourceFile, targetFile));
